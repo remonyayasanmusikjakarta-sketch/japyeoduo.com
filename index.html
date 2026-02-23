@@ -1,0 +1,5871 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YMJ Stage - Performance & Artist Management Division</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Brusher&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+--primary-dark: #0a0e27;
+--primary: #1e3a5f;
+--primary-light: #2d5a8e;
+--secondary: #d4af37;
+--secondary-dark: #b8941f;
+--accent: #c9302c;
+--accent-light: #e74c3c;
+--bg-light: #f8f9fa;
+--bg-white: #ffffff;
+--text-dark: #2c3e50;
+--text-light: #7f8c8d;
+--text-muted: #95a5a6;
+--border: #e1e8ed;
+--shadow-sm: 0 2px 4px rgba(0,0,0,0.08);
+--shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+--shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+--shadow-xl: 0 20px 40px rgba(0,0,0,0.2);
+--gradient-primary: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+--gradient-secondary: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+--gradient-accent: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+}
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+html {
+scroll-behavior: smooth;
+}
+
+body {
+font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+line-height: 1.6;
+color: var(--text-dark);
+background-color: var(--bg-light);
+overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+font-family: 'Playfair Display', serif;
+font-weight: 700;
+color: var(--primary);
+line-height: 1.2;
+}
+
+.container {
+max-width: 1400px;
+margin: 0 auto;
+padding: 0 24px;
+}
+
+/* Animated Background */
+.animated-bg {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: -1;
+background: linear-gradient(45deg, #f0f0f0 25%, transparent 25%),
+linear-gradient(-45deg, #f0f0f0 25%, transparent 25%),
+linear-gradient(45deg, transparent 75%, #f0f0f0 75%),
+linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+background-size: 20px 20px;
+background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+animation: bgMove 20s linear infinite;
+opacity: 0.03;
+}
+
+@keyframes bgMove {
+0% { background-position: 0 0, 0 10px, 10px -10px, -10px 0px; }
+100% { background-position: 20px 20px, 20px 30px, 30px 10px, 10px 20px; }
+}
+
+/* Admin Login Styles */
+.admin-login {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(10, 14, 39, 0.95);
+backdrop-filter: blur(20px);
+display: none;
+justify-content: center;
+align-items: center;
+z-index: 10000;
+animation: fadeIn 0.3s ease;
+}
+
+.admin-login.active {
+display: flex;
+}
+
+.login-form {
+background: var(--bg-white);
+padding: 3rem;
+border-radius: 20px;
+box-shadow: var(--shadow-xl);
+max-width: 450px;
+width: 90%;
+animation: slideUp 0.4s ease;
+border: 1px solid rgba(255,255,255,0.1);
+}
+
+@keyframes slideUp {
+from {
+opacity: 0;
+transform: translateY(40px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+.login-form h2 {
+text-align: center;
+margin-bottom: 2rem;
+color: var(--primary);
+font-size: 1.8rem;
+}
+
+.login-form .form-group {
+margin-bottom: 1.5rem;
+}
+
+.login-form label {
+display: block;
+margin-bottom: 0.5rem;
+font-weight: 600;
+color: var(--text-dark);
+font-size: 0.9rem;
+}
+
+.login-form input {
+width: 100%;
+padding: 14px;
+border: 2px solid var(--border);
+border-radius: 12px;
+font-size: 1rem;
+transition: all 0.3s ease;
+background: var(--bg-light);
+}
+
+.login-form input:focus {
+outline: none;
+border-color: var(--primary);
+background: var(--bg-white);
+box-shadow: 0 0 0 4px rgba(30, 58, 95, 0.1);
+}
+
+.login-buttons {
+display: flex;
+gap: 1rem;
+margin-top: 2rem;
+}
+
+.login-buttons button {
+flex: 1;
+padding: 14px;
+border: none;
+border-radius: 12px;
+font-size: 1rem;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+.btn-login {
+background: var(--gradient-primary);
+color: white;
+}
+
+.btn-login:hover {
+transform: translateY(-2px);
+box-shadow: var(--shadow-lg);
+}
+
+.btn-cancel {
+background: var(--bg-light);
+color: var(--text-dark);
+}
+
+.btn-cancel:hover {
+background: var(--border);
+}
+
+.login-error {
+background: #fee;
+color: var(--accent);
+border: 1px solid #fcc;
+padding: 12px;
+border-radius: 8px;
+margin-bottom: 1rem;
+font-size: 0.9rem;
+display: none;
+animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+0%, 100% { transform: translateX(0); }
+25% { transform: translateX(-10px); }
+75% { transform: translateX(10px); }
+}
+
+.login-attempts {
+text-align: center;
+margin-top: 1rem;
+font-size: 0.85rem;
+color: var(--text-muted);
+}
+
+/* Admin Dashboard Styles */
+.admin-dashboard {
+position: fixed;
+top: 0;
+right: -600px;
+width: 600px;
+height: 100%;
+background: var(--bg-white);
+box-shadow: var(--shadow-xl);
+transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+z-index: 9999;
+overflow-y: auto;
+}
+
+.admin-dashboard.active {
+right: 0;
+}
+
+.admin-header {
+background: var(--gradient-primary);
+color: white;
+padding: 1.5rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.admin-header h3 {
+color: white;
+margin: 0;
+font-size: 1.3rem;
+}
+
+.close-admin {
+background: none;
+border: none;
+color: white;
+font-size: 1.5rem;
+cursor: pointer;
+transition: all 0.3s ease;
+width: 40px;
+height: 40px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.close-admin:hover {
+background: rgba(255,255,255,0.1);
+transform: rotate(90deg);
+}
+
+.admin-content {
+padding: 2rem;
+}
+
+.admin-section {
+margin-bottom: 2.5rem;
+padding-bottom: 2rem;
+border-bottom: 1px solid var(--border);
+}
+
+.admin-section:last-child {
+border-bottom: none;
+}
+
+.admin-section h4 {
+margin-bottom: 1.5rem;
+color: var(--primary);
+font-size: 1.2rem;
+font-weight: 600;
+}
+
+.upload-area {
+border: 2px dashed var(--border);
+border-radius: 16px;
+padding: 2rem;
+text-align: center;
+transition: all 0.3s ease;
+cursor: pointer;
+background: var(--bg-light);
+margin-bottom: 1.5rem;
+position: relative;
+overflow: hidden;
+}
+
+.upload-area::before {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: linear-gradient(90deg, transparent, rgba(30, 58, 95, 0.1), transparent);
+transition: left 0.5s ease;
+}
+
+.upload-area:hover::before {
+left: 100%;
+}
+
+.upload-area:hover {
+border-color: var(--primary);
+background: rgba(30, 58, 95, 0.05);
+transform: translateY(-2px);
+box-shadow: var(--shadow-md);
+}
+
+.upload-area.dragover {
+border-color: var(--secondary);
+background: rgba(212, 175, 55, 0.1);
+}
+
+.upload-icon {
+font-size: 3rem;
+color: var(--primary);
+margin-bottom: 1rem;
+animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+0%, 100% { transform: translateY(0); }
+50% { transform: translateY(-10px); }
+}
+
+.upload-text {
+color: var(--text-dark);
+margin-bottom: 0.5rem;
+font-size: 1rem;
+font-weight: 500;
+}
+
+.upload-hint {
+color: var(--text-muted);
+font-size: 0.9rem;
+}
+
+.file-input {
+display: none;
+}
+
+.image-manager {
+margin-top: 1.5rem;
+}
+
+.current-image {
+position: relative;
+border-radius: 12px;
+overflow: hidden;
+background: var(--bg-light);
+margin-bottom: 1rem;
+box-shadow: var(--shadow-sm);
+}
+
+.current-image img {
+width: 100%;
+height: 180px;
+object-fit: cover;
+display: block;
+transition: transform 0.3s ease;
+}
+
+.current-image:hover img {
+transform: scale(1.05);
+}
+
+.image-info {
+padding: 0.75rem;
+background: var(--primary);
+color: white;
+font-size: 0.85rem;
+}
+
+.image-actions {
+position: absolute;
+top: 10px;
+right: 10px;
+display: flex;
+gap: 8px;
+}
+
+.image-actions button {
+background: rgba(0, 0, 0, 0.7);
+color: white;
+border: none;
+width: 36px;
+height: 36px;
+border-radius: 50%;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.3s ease;
+}
+
+.image-actions button:hover {
+background: var(--accent);
+transform: scale(1.1);
+}
+
+/* Admin Toggle Button */
+.admin-toggle {
+position: fixed;
+bottom: 30px;
+right: 30px;
+width: 64px;
+height: 64px;
+background: var(--gradient-primary);
+color: white;
+border: none;
+border-radius: 50%;
+font-size: 1.5rem;
+cursor: pointer;
+box-shadow: var(--shadow-lg);
+transition: all 0.3s ease;
+z-index: 1000;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.admin-toggle:hover {
+transform: scale(1.1) rotate(15deg);
+box-shadow: var(--shadow-xl);
+}
+
+.admin-toggle.logged-in {
+background: var(--gradient-secondary);
+}
+
+/* Event Management Styles */
+.event-manager {
+margin-top: 1.5rem;
+}
+
+.event-list {
+margin-top: 1.5rem;
+max-height: 300px;
+overflow-y: auto;
+}
+
+.event-item {
+background: var(--bg-light);
+border-radius: 12px;
+padding: 1.25rem;
+margin-bottom: 1rem;
+position: relative;
+transition: all 0.3s ease;
+border: 1px solid var(--border);
+}
+
+.event-item:hover {
+transform: translateX(5px);
+box-shadow: var(--shadow-sm);
+}
+
+.event-item-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 0.75rem;
+}
+
+.event-item-title {
+font-weight: 600;
+color: var(--primary);
+font-size: 1rem;
+}
+
+.event-item-date {
+font-size: 0.85rem;
+color: var(--text-muted);
+}
+
+.event-item-actions {
+display: flex;
+gap: 0.5rem;
+}
+
+.event-item-actions button {
+background: none;
+border: none;
+color: var(--text-muted);
+cursor: pointer;
+transition: all 0.3s ease;
+width: 32px;
+height: 32px;
+border-radius: 8px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.event-item-actions button:hover {
+color: var(--accent);
+background: rgba(201, 48, 44, 0.1);
+}
+
+.event-form {
+background: var(--bg-light);
+border-radius: 12px;
+padding: 1.5rem;
+margin-bottom: 1.5rem;
+border: 1px solid var(--border);
+}
+
+.event-form-group {
+margin-bottom: 1.25rem;
+}
+
+.event-form-group label {
+display: block;
+margin-bottom: 0.5rem;
+font-weight: 600;
+color: var(--text-dark);
+font-size: 0.9rem;
+}
+
+.event-form-group input,
+.event-form-group textarea {
+width: 100%;
+padding: 12px;
+border: 2px solid var(--border);
+border-radius: 10px;
+font-family: inherit;
+transition: all 0.3s ease;
+background: var(--bg-white);
+}
+
+.event-form-group input:focus,
+.event-form-group textarea:focus {
+outline: none;
+border-color: var(--primary);
+box-shadow: 0 0 0 4px rgba(30, 58, 95, 0.1);
+}
+
+.event-form-group textarea {
+min-height: 100px;
+resize: vertical;
+}
+
+.event-form-buttons {
+display: flex;
+gap: 0.75rem;
+justify-content: flex-end;
+}
+
+.btn-small {
+padding: 10px 20px;
+border: none;
+border-radius: 10px;
+font-size: 0.9rem;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+.btn-save {
+background: var(--gradient-accent);
+color: white;
+}
+
+.btn-save:hover {
+transform: translateY(-2px);
+box-shadow: var(--shadow-md);
+}
+
+.btn-cancel {
+background: var(--bg-light);
+color: var(--text-dark);
+border: 1px solid var(--border);
+}
+
+.btn-cancel:hover {
+background: var(--border);
+}
+
+.btn-add {
+background: var(--gradient-primary);
+color: white;
+}
+
+.btn-add:hover {
+transform: translateY(-2px);
+box-shadow: var(--shadow-md);
+}
+
+/* Text Editor Styles */
+.text-editor {
+margin-top: 1.5rem;
+}
+
+.text-editor textarea {
+width: 100%;
+min-height: 150px;
+padding: 14px;
+border: 2px solid var(--border);
+border-radius: 12px;
+font-family: inherit;
+resize: vertical;
+transition: all 0.3s ease;
+background: var(--bg-white);
+}
+
+.text-editor textarea:focus {
+outline: none;
+border-color: var(--primary);
+box-shadow: 0 0 0 4px rgba(30, 58, 95, 0.1);
+}
+
+.text-editor-buttons {
+display: flex;
+gap: 0.75rem;
+justify-content: flex-end;
+margin-top: 1rem;
+}
+
+/* Info Box for Image Storage */
+.info-box {
+background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+border-left: 4px solid var(--primary);
+padding: 1.25rem;
+margin-bottom: 1.5rem;
+border-radius: 0 12px 12px 0;
+box-shadow: var(--shadow-sm);
+}
+
+.info-box p {
+margin: 0;
+font-size: 0.9rem;
+color: var(--text-dark);
+}
+
+/* Upload Progress Bar */
+.upload-progress {
+position: absolute;
+bottom: 0;
+left: 0;
+height: 4px;
+background: var(--gradient-primary);
+border-radius: 0 0 12px 12px;
+transition: width 0.3s ease;
+}
+
+/* Firebase Status */
+.firebase-status {
+padding: 12px;
+margin-bottom: 1.5rem;
+border-radius: 10px;
+text-align: center;
+font-size: 0.9rem;
+font-weight: 500;
+}
+
+.firebase-status.connected {
+background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+color: #155724;
+border: 1px solid #c3e6cb;
+}
+
+.firebase-status.disconnected {
+background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+color: #721c24;
+border: 1px solid #f5c6cb;
+}
+
+/* Security Info */
+.security-info {
+background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+border-left: 4px solid var(--secondary);
+padding: 1.25rem;
+margin-bottom: 1.5rem;
+border-radius: 0 12px 12px 0;
+box-shadow: var(--shadow-sm);
+}
+
+.security-info p {
+margin: 0;
+font-size: 0.9rem;
+color: var(--text-dark);
+}
+
+/* Splash Screen Styles */
+.splash-screen {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: var(--gradient-primary);
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 9999;
+transition: all 0.8s ease;
+cursor: pointer;
+overflow: hidden;
+}
+
+.splash-screen::before {
+content: '';
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+from { transform: rotate(0deg); }
+to { transform: rotate(360deg); }
+}
+
+.splash-content {
+text-align: center;
+animation: fadeInUp 1.5s ease;
+z-index: 1;
+}
+
+.splash-logo {
+width: 220px;
+height: auto;
+margin-bottom: 30px;
+cursor: pointer;
+transition: all 0.5s ease;
+border-radius: 20px;
+box-shadow: var(--shadow-xl);
+}
+
+.splash-logo:hover {
+transform: scale(1.05) rotate(5deg);
+}
+
+.splash-text {
+color: white;
+font-family: 'Playfair Display', serif;
+font-size: 2.5rem;
+font-weight: 900;
+margin-bottom: 15px;
+text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+letter-spacing: -1px;
+}
+
+.splash-subtext {
+color: var(--secondary);
+font-size: 1.2rem;
+font-weight: 300;
+margin-bottom: 10px;
+}
+
+.splash-hint {
+position: absolute;
+bottom: 40px;
+left: 0;
+width: 100%;
+text-align: center;
+color: rgba(255, 255, 255, 0.8);
+font-size: 1rem;
+animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+0%, 100% { opacity: 0.6; transform: translateY(0); }
+50% { opacity: 1; transform: translateY(-5px); }
+}
+
+@keyframes fadeInUp {
+from { 
+opacity: 0; 
+transform: translateY(40px); 
+}
+to { 
+opacity: 1; 
+transform: translateY(0); 
+}
+}
+
+.main-content {
+opacity: 0;
+visibility: hidden;
+transition: all 0.8s ease;
+}
+
+.main-content.active {
+opacity: 1;
+visibility: visible;
+}
+
+/* Header Styles */
+header {
+background: rgba(255, 255, 255, 0.95);
+backdrop-filter: blur(20px);
+box-shadow: var(--shadow-md);
+position: fixed;
+width: 100%;
+top: 0;
+z-index: 1000;
+transition: all 0.3s ease;
+border-bottom: 1px solid var(--border);
+}
+
+nav {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 1rem 0;
+}
+
+.logo-container {
+display: flex;
+align-items: center;
+gap: 16px;
+}
+
+.logo-img {
+height: 50px;
+width: auto;
+transition: all 0.3s ease;
+border-radius: 10px;
+box-shadow: var(--shadow-sm);
+}
+
+.logo-img:hover {
+transform: scale(1.05) rotate(-5deg);
+box-shadow: var(--shadow-md);
+}
+
+.logo-text {
+font-family: 'Playfair Display', serif;
+font-size: 1.8rem;
+color: var(--primary);
+text-decoration: none;
+font-weight: 900;
+letter-spacing: -1px;
+}
+
+.nav-menu {
+display: flex;
+list-style: none;
+gap: 2.5rem;
+align-items: center;
+}
+
+.nav-menu a {
+color: var(--text-dark);
+text-decoration: none;
+transition: all 0.3s ease;
+font-weight: 500;
+font-size: 1rem;
+position: relative;
+}
+
+.nav-menu a::after {
+content: '';
+position: absolute;
+bottom: -5px;
+left: 0;
+width: 0;
+height: 2px;
+background: var(--gradient-primary);
+transition: width 0.3s ease;
+}
+
+.nav-menu a:hover {
+color: var(--primary);
+}
+
+.nav-menu a:hover::after {
+width: 100%;
+}
+
+.language-selector {
+display: flex;
+gap: 0.75rem;
+align-items: center;
+background: var(--bg-light);
+padding: 0.5rem;
+border-radius: 12px;
+border: 1px solid var(--border);
+}
+
+.lang-btn {
+background: none;
+border: none;
+cursor: pointer;
+font-size: 1.3rem;
+transition: all 0.3s ease;
+width: 40px;
+height: 40px;
+border-radius: 10px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.lang-btn:hover {
+background: var(--bg-white);
+transform: scale(1.1);
+}
+
+.lang-btn.active {
+background: var(--gradient-primary);
+color: white;
+box-shadow: var(--shadow-sm);
+}
+
+.mobile-menu-toggle {
+display: none;
+background: none;
+border: none;
+font-size: 1.5rem;
+cursor: pointer;
+color: var(--primary);
+width: 44px;
+height: 44px;
+border-radius: 12px;
+transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle:hover {
+background: var(--bg-light);
+}
+
+/* Hero Section */
+.hero {
+margin-top: 80px;
+min-height: 100vh;
+display: flex;
+align-items: center;
+background: var(--gradient-primary);
+color: white;
+position: relative;
+overflow: hidden;
+}
+
+.hero::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,106.7C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+background-size: cover;
+opacity: 0.3;
+}
+
+.hero-bg {
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+background-size: cover;
+background-position: center;
+opacity: 0.15;
+transition: opacity 0.5s ease;
+}
+
+.hero-content {
+position: relative;
+z-index: 1;
+text-align: center;
+padding: 2rem;
+max-width: 900px;
+margin: 0 auto;
+}
+
+.hero h1 {
+font-size: 4rem;
+margin-bottom: 1.5rem;
+color: white;
+animation: fadeInUp 1s ease;
+font-weight: 900;
+letter-spacing: -2px;
+text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-subtitle {
+font-size: 1.8rem;
+margin-bottom: 2.5rem;
+font-weight: 300;
+animation: fadeInUp 1s ease 0.2s;
+animation-fill-mode: both;
+color: var(--secondary);
+}
+
+.hero-description {
+max-width: 800px;
+margin: 0 auto 2.5rem;
+font-size: 1.2rem;
+line-height: 1.8;
+animation: fadeInUp 1s ease 0.4s;
+animation-fill-mode: both;
+color: rgba(255,255,255,0.9);
+}
+
+.hero-buttons {
+display: flex;
+gap: 1.5rem;
+justify-content: center;
+flex-wrap: wrap;
+animation: fadeInUp 1s ease 0.6s;
+animation-fill-mode: both;
+}
+
+.btn {
+padding: 16px 36px;
+border: none;
+border-radius: 50px;
+font-size: 1.1rem;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+text-decoration: none;
+display: inline-flex;
+align-items: center;
+gap: 0.5rem;
+position: relative;
+overflow: hidden;
+}
+
+.btn::before {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: rgba(255,255,255,0.2);
+transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+left: 100%;
+}
+
+.btn-primary {
+background: var(--gradient-secondary);
+color: var(--primary-dark);
+box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+transform: translateY(-3px);
+box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+background: transparent;
+color: white;
+border: 2px solid white;
+}
+
+.btn-secondary:hover {
+background: white;
+color: var(--primary);
+transform: translateY(-3px);
+box-shadow: var(--shadow-lg);
+}
+
+/* Mission Highlight dengan Drop Cap */
+.mission-highlight {
+color: var(--secondary);
+font-weight: 700;
+font-size: 1.5rem;
+margin: 2.5rem auto;
+position: relative;
+padding: 1.5rem;
+background: var(--primary-dark);
+border-radius: 16px;
+border: 1px solid var(--border);
+max-width: 500px;
+text-align: left;
+font-family: 'Poppins', sans-serif;
+line-height: 1.4;
+}
+
+/* Drop Cap 2 Baris dengan Brush Script */
+.mission-highlight::first-letter {
+font-family: italic;
+font-size: 6rem;
+font-weight: 400;
+color: rgb(255, 209, 45);
+float: left;
+line-height: 0.8;
+margin-right: 15px;
+margin-top: 0.2rem;
+text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+height: 3.8rem;
+}
+
+/* YMJ Stage Caption Section */
+.ymj-caption {
+max-width: 900px;
+margin: 4rem auto;
+padding: 0 1rem;
+}
+
+.ymj-caption-header {
+text-align: center;
+margin-bottom: 3rem;
+}
+
+.ymj-caption-title {
+font-size: 2.5rem;
+color: var(--primary);
+margin-bottom: 1rem;
+font-weight: 900;
+}
+
+.ymj-caption-subtitle {
+font-size: 1.5rem;
+color: var(--secondary);
+margin-bottom: 0.5rem;
+font-weight: 600;
+}
+
+.ymj-caption-division {
+font-size: 1.2rem;
+color: var(--text-muted);
+margin-bottom: 1.5rem;
+}
+
+.ymj-caption-tagline {
+font-size: 1.3rem;
+color: var(--primary);
+font-weight: 600;
+font-style: italic;
+margin-bottom: 2rem;
+position: relative;
+padding-bottom: 1.5rem;
+}
+
+.ymj-caption-tagline::after {
+content: '';
+position: absolute;
+bottom: 0;
+left: 50%;
+transform: translateX(-50%);
+width: 100px;
+height: 2px;
+background: var(--gradient-secondary);
+border-radius: 2px;
+}
+
+.ymj-caption-content {
+text-align: justify;
+font-size: 1.1rem;
+line-height: 1.8;
+color: var(--text-dark);
+margin-bottom: 2rem;
+}
+
+.ymj-caption-content p {
+margin-bottom: 1.5rem;
+}
+
+.ymj-caption-content p:last-child {
+margin-bottom: 0;
+}
+
+.ymj-caption-highlight {
+font-weight: 600;
+color: var(--primary);
+}
+
+.ymj-caption-emphasis {
+font-style: italic;
+color: var(--secondary);
+}
+
+.ymj-caption-final {
+text-align: center;
+margin-top: 3rem;
+}
+
+.ymj-caption-final p {
+font-size: 1.2rem;
+font-weight: 600;
+color: var(--primary);
+margin-bottom: 0.5rem;
+}
+
+.ymj-caption-final p:last-child {
+font-style: italic;
+color: var(--secondary);
+}
+
+/* Section Styles */
+section {
+padding: 100px 0;
+position: relative;
+}
+
+.section-title {
+text-align: center;
+font-size: 3rem;
+margin-bottom: 4rem;
+position: relative;
+font-weight: 900;
+letter-spacing: -1px;
+}
+
+.section-title::after {
+content: '';
+position: absolute;
+bottom: -15px;
+left: 50%;
+transform: translateX(-50%);
+width: 100px;
+height: 4px;
+background: var(--gradient-secondary);
+border-radius: 2px;
+}
+
+/* Mission Section */
+.mission {
+background: var(--bg-white);
+position: relative;
+}
+
+.mission::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 1px;
+background: var(--border);
+}
+
+.mission-content {
+max-width: 900px;
+margin: 0 auto;
+text-align: center;
+font-size: 1.2rem;
+line-height: 1.8;
+color: var(--text-dark);
+}
+
+/* Events Section */
+.events {
+background: var(--bg-light);
+position: relative;
+}
+
+.events-timeline {
+max-width: 1200px;
+margin: 0 auto;
+position: relative;
+}
+
+.year-group {
+margin-bottom: 4rem;
+position: relative;
+}
+
+.year-header {
+display: flex;
+align-items: center;
+margin-bottom: 2rem;
+}
+
+.year-badge {
+background: var(--gradient-primary);
+color: white;
+font-family: 'Playfair Display', serif;
+font-size: 2rem;
+padding: 0.75rem 2rem;
+border-radius: 50px;
+margin-right: 2rem;
+box-shadow: var(--shadow-md);
+font-weight: 700;
+}
+
+.year-line {
+flex-grow: 1;
+height: 2px;
+background: linear-gradient(90deg, var(--primary) 0%, transparent 100%);
+}
+
+.events-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+gap: 2rem;
+}
+
+.event-card {
+background: var(--bg-white);
+border-radius: 16px;
+padding: 2rem;
+box-shadow: var(--shadow-md);
+transition: all 0.4s ease;
+border: 1px solid var(--border);
+position: relative;
+overflow: hidden;
+}
+
+.event-card::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+width: 4px;
+height: 100%;
+background: var(--gradient-secondary);
+}
+
+.event-card:hover {
+transform: translateY(-8px);
+box-shadow: var(--shadow-xl);
+}
+
+.event-date {
+color: var(--text-muted);
+font-size: 0.9rem;
+margin-bottom: 0.75rem;
+font-weight: 500;
+}
+
+.event-title {
+font-size: 1.5rem;
+margin-bottom: 0.75rem;
+color: var(--primary);
+font-weight: 700;
+}
+
+.event-location {
+display: flex;
+align-items: center;
+color: var(--text-muted);
+font-size: 0.95rem;
+margin-bottom: 1.25rem;
+}
+
+.event-location i {
+margin-right: 0.5rem;
+color: var(--accent);
+}
+
+.event-description {
+line-height: 1.7;
+margin-bottom: 1.5rem;
+color: var(--text-dark);
+}
+
+.event-link {
+color: var(--accent);
+font-weight: 600;
+text-decoration: none;
+display: inline-flex;
+align-items: center;
+transition: all 0.3s ease;
+font-size: 1rem;
+}
+
+.event-link:hover {
+color: var(--primary);
+transform: translateX(5px);
+}
+
+.event-link i {
+margin-left: 0.5rem;
+transition: transform 0.3s ease;
+}
+
+/* Event Detail Modal */
+.event-detail-modal {
+display: none;
+position: fixed;
+z-index: 20000;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(10, 14, 39, 0.95);
+backdrop-filter: blur(20px);
+animation: fadeIn 0.3s ease;
+overflow-y: auto;
+}
+
+.event-detail-content {
+background-color: var(--bg-white);
+margin: 5% auto;
+padding: 3rem;
+border-radius: 20px;
+width: 90%;
+max-width: 900px;
+position: relative;
+animation: slideUp 0.4s ease;
+box-shadow: var(--shadow-xl);
+}
+
+.event-detail-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 2rem;
+border-bottom: 2px solid var(--border);
+padding-bottom: 1.5rem;
+}
+
+.event-detail-title {
+font-size: 2rem;
+color: var(--primary);
+font-weight: 700;
+}
+
+.event-detail-close {
+background: none;
+border: none;
+font-size: 1.5rem;
+cursor: pointer;
+color: var(--text-muted);
+transition: all 0.3s ease;
+width: 44px;
+height: 44px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.event-detail-close:hover {
+color: var(--accent);
+background: rgba(201, 48, 44, 0.1);
+}
+
+.event-detail-body {
+line-height: 1.8;
+}
+
+.event-detail-image {
+width: 100%;
+height: 400px;
+object-fit: cover;
+border-radius: 16px;
+margin-bottom: 2rem;
+box-shadow: var(--shadow-md);
+}
+
+/* Featured Project */
+.featured-project {
+background: var(--bg-white);
+position: relative;
+}
+
+.project-card {
+background: var(--bg-white);
+border-radius: 20px;
+overflow: hidden;
+box-shadow: var(--shadow-lg);
+transition: all 0.4s ease;
+border: 1px solid var(--border);
+}
+
+.project-card:hover {
+transform: translateY(-10px);
+box-shadow: var(--shadow-xl);
+}
+
+.project-image {
+height: 400px;
+position: relative;
+overflow: hidden;
+}
+
+.project-image img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+transition: transform 0.6s ease;
+}
+
+.project-card:hover .project-image img {
+transform: scale(1.08);
+}
+
+.project-content {
+padding: 3rem;
+}
+
+.project-title {
+font-size: 2rem;
+margin-bottom: 1.5rem;
+color: var(--primary);
+font-weight: 700;
+}
+
+.project-description {
+margin-bottom: 2rem;
+line-height: 1.8;
+color: var(--text-dark);
+font-size: 1.1rem;
+}
+
+/* Artists Section */
+.artists-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+gap: 2.5rem;
+margin-top: 4rem;
+}
+
+.artist-card {
+background: var(--bg-white);
+border-radius: 20px;
+overflow: hidden;
+box-shadow: var(--shadow-md);
+transition: all 0.4s ease;
+border: 1px solid var(--border);
+position: relative;
+}
+
+.artist-card::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 4px;
+background: var(--gradient-secondary);
+}
+
+.artist-card:hover {
+transform: translateY(-8px);
+box-shadow: var(--shadow-xl);
+}
+
+.artist-image {
+height: 280px;
+position: relative;
+overflow: hidden;
+}
+
+.artist-image img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+transition: transform 0.6s ease;
+}
+
+.artist-card:hover .artist-image img {
+transform: scale(1.08);
+}
+
+.artist-info {
+padding: 2rem;
+}
+
+.artist-name {
+font-size: 1.8rem;
+margin-bottom: 0.5rem;
+color: var(--primary);
+font-weight: 700;
+}
+
+.artist-role {
+color: var(--text-muted);
+margin-bottom: 1.5rem;
+font-size: 1.1rem;
+font-weight: 500;
+}
+
+.artist-bio {
+line-height: 1.7;
+margin-bottom: 1.5rem;
+color: var(--text-dark);
+}
+
+.artist-links {
+display: flex;
+gap: 1.5rem;
+}
+
+.artist-links a {
+color: var(--accent);
+text-decoration: none;
+font-weight: 600;
+transition: all 0.3s ease;
+font-size: 1rem;
+position: relative;
+}
+
+.artist-links a::after {
+content: '';
+position: absolute;
+bottom: -2px;
+left: 0;
+width: 0;
+height: 2px;
+background: var(--accent);
+transition: width 0.3s ease;
+}
+
+.artist-links a:hover {
+color: var(--primary);
+}
+
+.artist-links a:hover::after {
+width: 100%;
+}
+
+/* Artist Detail Modal */
+.artist-detail-modal {
+display: none;
+position: fixed;
+z-index: 20000;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(10, 14, 39, 0.95);
+backdrop-filter: blur(20px);
+animation: fadeIn 0.3s ease;
+overflow-y: auto;
+}
+
+.artist-detail-content {
+background-color: var(--bg-white);
+margin: 3% auto;
+padding: 3rem;
+border-radius: 20px;
+width: 90%;
+max-width: 900px;
+position: relative;
+animation: slideUp 0.4s ease;
+box-shadow: var(--shadow-xl);
+}
+
+.artist-detail-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 2rem;
+border-bottom: 2px solid var(--border);
+padding-bottom: 1.5rem;
+}
+
+.artist-detail-title {
+font-size: 2rem;
+color: var(--primary);
+font-weight: 700;
+}
+
+.artist-detail-close {
+background: none;
+border: none;
+font-size: 1.5rem;
+cursor: pointer;
+color: var(--text-muted);
+transition: all 0.3s ease;
+width: 44px;
+height: 44px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.artist-detail-close:hover {
+color: var(--accent);
+background: rgba(201, 48, 44, 0.1);
+}
+
+.artist-detail-body {
+line-height: 1.8;
+}
+
+.artist-detail-image {
+width: 100%;
+height: 400px;
+object-fit: cover;
+border-radius: 16px;
+margin-bottom: 2rem;
+box-shadow: var(--shadow-md);
+}
+
+.artist-detail-section {
+margin-bottom: 3rem;
+}
+
+.artist-detail-section h3 {
+color: var(--primary);
+margin-bottom: 1.5rem;
+font-size: 1.5rem;
+font-weight: 700;
+}
+
+.repertoire-list {
+list-style: none;
+padding: 0;
+}
+
+.repertoire-list li {
+padding: 1rem 0;
+border-bottom: 1px solid var(--border);
+transition: all 0.3s ease;
+}
+
+.repertoire-list li:hover {
+padding-left: 1rem;
+color: var(--primary);
+}
+
+.repertoire-list li:last-child {
+border-bottom: none;
+}
+
+.media-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+gap: 1.5rem;
+}
+
+.media-item {
+position: relative;
+border-radius: 12px;
+overflow: hidden;
+height: 200px;
+box-shadow: var(--shadow-md);
+transition: all 0.3s ease;
+}
+
+.media-item:hover {
+transform: scale(1.05);
+box-shadow: var(--shadow-lg);
+}
+
+.media-item img,
+.media-item video {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+.media-overlay {
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+color: white;
+padding: 1rem;
+}
+
+/* Gallery Section */
+.gallery-container {
+margin-top: 3rem;
+}
+
+.gallery-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+gap: 2rem;
+margin-bottom: 3rem;
+}
+
+.gallery-item {
+position: relative;
+overflow: hidden;
+border-radius: 16px;
+height: 250px;
+cursor: pointer;
+transition: all 0.4s ease;
+box-shadow: var(--shadow-md);
+}
+
+.gallery-item:hover {
+transform: scale(1.03);
+box-shadow: var(--shadow-xl);
+}
+
+.gallery-item img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+transition: transform 0.6s ease;
+}
+
+.gallery-item:hover img {
+transform: scale(1.1);
+}
+
+.gallery-overlay {
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+color: white;
+padding: 1.5rem;
+transform: translateY(100%);
+transition: transform 0.4s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+transform: translateY(0);
+}
+
+.gallery-info {
+text-align: center;
+margin-bottom: 3rem;
+color: var(--text-muted);
+}
+
+.gallery-count {
+font-size: 1.2rem;
+margin-bottom: 1rem;
+}
+
+.gallery-view-all {
+color: var(--primary);
+font-weight: 600;
+text-decoration: none;
+display: inline-flex;
+align-items: center;
+transition: all 0.3s ease;
+padding: 12px 30px;
+border: 2px solid var(--primary);
+border-radius: 50px;
+font-size: 1rem;
+}
+
+.gallery-view-all:hover {
+background: var(--gradient-primary);
+color: white;
+transform: translateY(-2px);
+box-shadow: var(--shadow-md);
+}
+
+.gallery-view-all i {
+margin-left: 0.5rem;
+transition: transform 0.3s ease;
+}
+
+.gallery-view-all:hover i {
+transform: translateX(5px);
+}
+
+/* Full Gallery Modal */
+.full-gallery-modal {
+display: none;
+position: fixed;
+z-index: 20000;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(10, 14, 39, 0.98);
+backdrop-filter: blur(20px);
+animation: fadeIn 0.3s ease;
+overflow-y: auto;
+}
+
+.full-gallery-content {
+max-width: 1400px;
+margin: 0 auto;
+padding: 2rem;
+}
+
+.full-gallery-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 3rem;
+color: white;
+}
+
+.full-gallery-header h2 {
+color: white;
+margin: 0;
+font-size: 2rem;
+}
+
+.close-full-gallery {
+background: none;
+border: none;
+color: white;
+font-size: 2rem;
+cursor: pointer;
+transition: all 0.3s ease;
+width: 50px;
+height: 50px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.close-full-gallery:hover {
+background: rgba(255,255,255,0.1);
+transform: rotate(90deg);
+}
+
+.full-gallery-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+gap: 1.5rem;
+}
+
+.full-gallery-item {
+position: relative;
+border-radius: 12px;
+overflow: hidden;
+cursor: pointer;
+transition: all 0.3s ease;
+box-shadow: var(--shadow-md);
+}
+
+.full-gallery-item:hover {
+transform: scale(1.05);
+box-shadow: var(--shadow-lg);
+}
+
+.full-gallery-item img {
+width: 100%;
+height: 250px;
+object-fit: cover;
+display: block;
+}
+
+.full-gallery-overlay {
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+color: white;
+padding: 1rem;
+font-size: 0.9rem;
+}
+
+/* Community Section */
+.community {
+background: var(--bg-white);
+position: relative;
+}
+
+.community-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+gap: 2rem;
+margin-top: 4rem;
+}
+
+.community-card {
+text-align: center;
+padding: 2.5rem;
+border-radius: 20px;
+background: var(--bg-light);
+transition: all 0.4s ease;
+border: 1px solid var(--border);
+position: relative;
+overflow: hidden;
+}
+
+.community-card::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 4px;
+background: var(--gradient-primary);
+}
+
+.community-card:hover {
+background: var(--gradient-primary);
+color: white;
+transform: translateY(-8px);
+box-shadow: var(--shadow-xl);
+}
+
+.community-card i {
+font-size: 3.5rem;
+color: var(--primary);
+margin-bottom: 1.5rem;
+transition: all 0.3s ease;
+}
+
+.community-card:hover i {
+color: white;
+transform: scale(1.1);
+}
+
+.community-card h3 {
+margin-bottom: 1.5rem;
+color: var(--primary);
+font-size: 1.3rem;
+font-weight: 700;
+}
+
+.community-card:hover h3 {
+color: white;
+}
+
+/* Contact Section */
+.contact {
+background: var(--gradient-primary);
+color: white;
+position: relative;
+overflow: hidden;
+}
+
+.contact::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.05" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,106.7C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+background-size: cover;
+}
+
+.contact .section-title {
+color: white;
+}
+
+.contact-content {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+gap: 4rem;
+margin-top: 4rem;
+position: relative;
+z-index: 1;
+}
+
+.contact-info {
+display: flex;
+flex-direction: column;
+gap: 2rem;
+}
+
+.contact-item {
+display: flex;
+align-items: center;
+gap: 1.5rem;
+padding: 1.5rem;
+background: rgba(255,255,255,0.1);
+border-radius: 16px;
+backdrop-filter: blur(10px);
+transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+background: rgba(255,255,255,0.2);
+transform: translateX(10px);
+}
+
+.contact-item i {
+font-size: 2rem;
+color: var(--secondary);
+}
+
+.contact-form {
+background: var(--bg-white);
+padding: 2.5rem;
+border-radius: 20px;
+color: var(--text-dark);
+position: relative;
+z-index: 1;
+box-shadow: var(--shadow-xl);
+}
+
+.form-group {
+margin-bottom: 1.5rem;
+}
+
+.form-group label {
+display: block;
+margin-bottom: 0.5rem;
+font-weight: 600;
+color: var(--text-dark);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+width: 100%;
+padding: 14px;
+border: 2px solid var(--border);
+border-radius: 12px;
+font-family: inherit;
+transition: all 0.3s ease;
+background: var(--bg-light);
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+outline: none;
+border-color: var(--primary);
+background: var(--bg-white);
+box-shadow: 0 0 0 4px rgba(30, 58, 95, 0.1);
+}
+
+/* Success/Error Messages */
+.form-message {
+padding: 16px;
+border-radius: 12px;
+margin-bottom: 1.5rem;
+display: none;
+animation: slideDown 0.3s ease;
+font-weight: 500;
+}
+
+.form-message.success {
+background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+color: #155724;
+border: 1px solid #c3e6cb;
+}
+
+.form-message.error {
+background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+color: #721c24;
+border: 1px solid #f5c6cb;
+}
+
+@keyframes slideDown {
+from {
+opacity: 0;
+transform: translateY(-20px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+/* Newsletter Section */
+.newsletter {
+background: var(--bg-light);
+padding: 80px 0;
+position: relative;
+}
+
+.newsletter-content {
+max-width: 700px;
+margin: 0 auto;
+text-align: center;
+}
+
+.newsletter-form {
+display: flex;
+gap: 1rem;
+margin-top: 2.5rem;
+flex-wrap: wrap;
+justify-content: center;
+}
+
+.newsletter-form input {
+flex: 1;
+min-width: 300px;
+padding: 16px 24px;
+border: 2px solid var(--border);
+border-radius: 50px;
+font-family: inherit;
+background: var(--bg-white);
+transition: all 0.3s ease;
+}
+
+.newsletter-form input:focus {
+outline: none;
+border-color: var(--primary);
+box-shadow: 0 0 0 4px rgba(30, 58, 95, 0.1);
+}
+
+/* Survey Section */
+.survey {
+background: var(--bg-white);
+padding: 80px 0;
+}
+
+.survey-form {
+max-width: 900px;
+margin: 0 auto;
+background: var(--bg-light);
+padding: 3rem;
+border-radius: 20px;
+box-shadow: var(--shadow-md);
+}
+
+.survey-question {
+margin-bottom: 2.5rem;
+}
+
+.survey-question h4 {
+color: var(--primary);
+margin-bottom: 1.5rem;
+font-size: 1.3rem;
+font-weight: 600;
+}
+
+.radio-group,
+.checkbox-group {
+display: flex;
+flex-direction: column;
+gap: 0.75rem;
+}
+
+.radio-group label,
+.checkbox-group label {
+display: flex;
+align-items: center;
+gap: 0.75rem;
+cursor: pointer;
+padding: 1rem;
+border-radius: 12px;
+transition: all 0.3s ease;
+border: 1px solid var(--border);
+}
+
+.radio-group label:hover,
+.checkbox-group label:hover {
+background: rgba(30, 58, 95, 0.05);
+border-color: var(--primary);
+}
+
+/* Footer */
+footer {
+background: var(--primary-dark);
+color: white;
+text-align: center;
+padding: 3rem 0;
+position: relative;
+}
+
+footer::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 1px;
+background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+}
+
+.social-links {
+display: flex;
+justify-content: center;
+gap: 1.5rem;
+margin-bottom: 2rem;
+}
+
+.social-links a {
+color: white;
+font-size: 1.8rem;
+transition: all 0.3s ease;
+width: 50px;
+height: 50px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+background: rgba(255,255,255,0.1);
+}
+
+.social-links a:hover {
+color: var(--secondary);
+transform: translateY(-5px) rotate(15deg);
+background: rgba(255,255,255,0.2);
+}
+
+/* Animations */
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+from {
+opacity: 0;
+transform: translateY(40px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+.fade-in {
+opacity: 0;
+transform: translateY(40px);
+transition: all 0.8s ease;
+}
+
+.fade-in.visible {
+opacity: 1;
+transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+.nav-menu {
+display: none;
+position: absolute;
+top: 100%;
+left: 0;
+width: 100%;
+background: var(--bg-white);
+flex-direction: column;
+padding: 1.5rem;
+box-shadow: var(--shadow-lg);
+border-top: 1px solid var(--border);
+}
+
+.nav-menu.active {
+display: flex;
+}
+
+.mobile-menu-toggle {
+display: flex;
+}
+
+.hero h1 {
+font-size: 2.5rem;
+}
+
+.hero-subtitle {
+font-size: 1.3rem;
+}
+
+.section-title {
+font-size: 2rem;
+}
+
+.hero-buttons {
+flex-direction: column;
+align-items: center;
+}
+
+.btn {
+width: 250px;
+}
+
+.newsletter-form {
+flex-direction: column;
+}
+
+.newsletter-form input {
+width: 100%;
+}
+
+.year-header {
+flex-direction: column;
+align-items: flex-start;
+}
+
+.year-badge {
+margin-bottom: 1rem;
+margin-right: 0;
+}
+
+.year-line {
+width: 100%;
+}
+
+.admin-dashboard {
+width: 100%;
+right: -100%;
+}
+
+.full-gallery-grid {
+grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+.events-grid {
+grid-template-columns: 1fr;
+}
+
+.artists-grid {
+grid-template-columns: 1fr;
+}
+
+.community-grid {
+grid-template-columns: 1fr;
+}
+
+.mission-highlight {
+font-size: 1.3rem;
+padding: 1.2rem;
+}
+
+.mission-highlight::first-letter {
+font-size: 5rem;
+margin-right: 10px;
+height: 3.2rem;
+}
+
+.ymj-caption-title {
+font-size: 2rem;
+}
+
+.ymj-caption-subtitle {
+font-size: 1.3rem;
+}
+
+.ymj-caption-content {
+font-size: 1rem;
+}
+}
+
+/* Hidden content for different languages */
+.content-en, .content-id, .content-zh {
+display: none;
+}
+
+.content-en.active, .content-id.active, .content-zh.active {
+display: block;
+}
+
+/* Image Modal */
+.image-modal {
+display: none;
+position: fixed;
+z-index: 20000;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(10, 14, 39, 0.95);
+backdrop-filter: blur(20px);
+animation: fadeIn 0.3s ease;
+}
+
+.image-modal-content {
+margin: auto;
+display: block;
+max-width: 90%;
+max-height: 90%;
+margin-top: 5%;
+border-radius: 20px;
+box-shadow: var(--shadow-xl);
+}
+
+.image-modal-close {
+position: absolute;
+top: 30px;
+right: 40px;
+color: white;
+font-size: 48px;
+font-weight: bold;
+cursor: pointer;
+transition: all 0.3s ease;
+width: 60px;
+height: 60px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+background: rgba(0,0,0,0.5);
+}
+
+.image-modal-close:hover {
+color: var(--secondary);
+transform: rotate(90deg);
+}
+
+/* Loading Spinner */
+.spinner {
+display: none;
+width: 24px;
+height: 24px;
+border: 3px solid rgba(0,0,0,0.1);
+border-top-color: var(--primary);
+border-radius: 50%;
+animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+to { transform: rotate(360deg); }
+}
+
+.btn.loading .spinner {
+display: inline-block;
+margin-left: 10px;
+}
+
+/* Placeholder styles for when no image is uploaded */
+.placeholder-image {
+width: 100%;
+height: 100%;
+background: linear-gradient(45deg, #f0f0f0 25%, transparent 25%),
+linear-gradient(-45deg, #f0f0f0 25%, transparent 25%),
+linear-gradient(45deg, transparent 75%, #f0f0f0 75%,
+linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+background-size: 20px 20px;
+background-position: 0 0, 0 10px, 0 10px;
+display: flex;
+align-items: center;
+justify-content: center;
+color: var(--text-muted);
+font-size: 0.9rem;
+}
+
+/* Gallery counter badge */
+.gallery-counter {
+background: var(--gradient-primary);
+color: white;
+padding: 0.25rem 0.75rem;
+border-radius: 20px;
+font-size: 0.85rem;
+font-weight: 600;
+margin-right: 0.5rem;
+}
+
+/* Upload success message */
+.upload-success {
+padding: 16px 24px;
+background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+color: #155724;
+border-radius: 12px;
+margin-top: 1.5rem;
+text-align: center;
+animation: slideDown 0.3s ease;
+box-shadow: var(--shadow-sm);
+}
+
+/* Multiple file upload styling */
+.file-list {
+margin-top: 1.5rem;
+max-height: 200px;
+overflow-y: auto;
+border: 1px solid var(--border);
+border-radius: 12px;
+padding: 1rem;
+background: var(--bg-light);
+}
+
+.file-item {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 0.75rem;
+border-bottom: 1px solid var(--border);
+}
+
+.file-item:last-child {
+border-bottom: none;
+}
+
+.file-name {
+font-size: 0.9rem;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+max-width: 70%;
+}
+
+.file-remove {
+background: var(--gradient-accent);
+color: white;
+border: none;
+border-radius: 8px;
+padding: 6px 12px;
+font-size: 0.8rem;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+.file-remove:hover {
+transform: scale(1.05);
+box-shadow: var(--shadow-sm);
+}
+</style>
+</head>
+<body>
+<div class="animated-bg"></div>
+
+<!-- Admin Login Modal -->
+<div class="admin-login" id="adminLogin">
+<div class="login-form">
+<h2>Admin Login</h2>
+<div class="login-error" id="loginError"></div>
+<form id="loginForm">
+<div class="form-group">
+<label for="adminUsername">Username</label>
+<input type="text" id="adminUsername" placeholder="Enter admin username" required>
+</div>
+<div class="form-group">
+<label for="adminPassword">Password</label>
+<input type="password" id="adminPassword" placeholder="Enter admin password" required>
+</div>
+<div class="login-buttons">
+<button type="submit" class="btn-login">Login</button>
+<button type="button" class="btn-cancel" onclick="closeAdminLogin()">Cancel</button>
+</div>
+<div class="login-attempts" id="loginAttempts">Attempts remaining: 3</div>
+</form>
+</div>
+</div>
+
+<!-- Admin Dashboard -->
+<div class="admin-dashboard" id="adminDashboard">
+<div class="admin-header">
+<h3>Admin Panel</h3>
+<button class="close-admin" onclick="toggleAdminDashboard()">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<div class="admin-content">
+<!-- Security Info -->
+<div class="security-info">
+<p><strong>Security Notice:</strong> This admin panel is protected. Only authorized users can make changes to this website.</p>
+</div>
+
+<!-- Firebase Status -->
+<div id="firebaseStatus" class="firebase-status disconnected">
+Firebase Status: Not Connected
+</div>
+
+<!-- Info Box -->
+<div class="info-box">
+<p><strong>Important:</strong> <span id="storageInfo">Images are stored in your browser's local storage. They will only be visible to you on this device and browser.</span></p>
+</div>
+
+<!-- Logo Management -->
+<div class="admin-section">
+<h4>Logo Management</h4>
+<div class="upload-area" id="logoUploadArea" onclick="document.getElementById('logoInput').click()">
+<i class="fas fa-upload upload-icon"></i>
+<p class="upload-text">Upload Logo</p>
+<p class="upload-hint">PNG, JPG up to 5MB</p>
+<input type="file" id="logoInput" class="file-input" accept="image/*">
+<div class="upload-progress" id="logoProgress" style="width: 0%; display: none;"></div>
+</div>
+<div class="image-manager">
+<div class="current-image">
+<img id="currentLogo" src="" alt="Current Logo" style="display:none;">
+<div class="placeholder-image" id="logoPlaceholder">
+<span>No logo uploaded</span>
+</div>
+<div class="image-info" id="logoInfo" style="display:none;"></div>
+</div>
+</div>
+</div>
+
+<!-- Background Management -->
+<div class="admin-section">
+<h4>Background Management</h4>
+<div class="upload-area" id="backgroundUploadArea" onclick="document.getElementById('backgroundInput').click()">
+<i class="fas fa-image upload-icon"></i>
+<p class="upload-text">Upload Background</p>
+<p class="upload-hint">PNG, JPG up to 5MB</p>
+<input type="file" id="backgroundInput" class="file-input" accept="image/*">
+<div class="upload-progress" id="backgroundProgress" style="width: 0%; display: none;"></div>
+</div>
+<div class="image-manager">
+<div class="current-image">
+<img id="currentBackground" src="" alt="Current Background" style="display:none;">
+<div class="placeholder-image" id="backgroundPlaceholder">
+<span>No background uploaded</span>
+</div>
+<div class="image-info" id="backgroundInfo" style="display:none;"></div>
+</div>
+</div>
+</div>
+
+<!-- Splash Logo Management -->
+<div class="admin-section">
+<h4>Splash Logo Management</h4>
+<div class="upload-area" id="splashLogoUploadArea" onclick="document.getElementById('splashLogoInput').click()">
+<i class="fas fa-star upload-icon"></i>
+<p class="upload-text">Upload Splash Logo</p>
+<p class="upload-hint">PNG, JPG up to 5MB</p>
+<input type="file" id="splashLogoInput" class="file-input" accept="image/*">
+<div class="upload-progress" id="splashLogoProgress" style="width: 0%; display: none;"></div>
+</div>
+<div class="image-manager">
+<div class="current-image">
+<img id="currentSplashLogo" src="" alt="Current Splash Logo" style="display:none;">
+<div class="placeholder-image" id="splashLogoPlaceholder">
+<span>No splash logo uploaded</span>
+</div>
+<div class="image-info" id="splashLogoInfo" style="display:none;"></div>
+</div>
+</div>
+</div>
+
+<!-- Content Management -->
+<div class="admin-section">
+<h4>Content Management</h4>
+<div class="text-editor">
+<div class="form-group">
+<label for="heroDescription">Hero Description</label>
+<textarea id="heroDescription" placeholder="Edit hero description text"></textarea>
+</div>
+<div class="text-editor-buttons">
+<button class="btn-small btn-save" onclick="saveTextContent('heroDescription')">Save</button>
+</div>
+</div>
+</div>
+
+<!-- Event Management -->
+<div class="admin-section">
+<h4>Event Management</h4>
+<button class="btn-small btn-add" onclick="showEventForm()">
+<i class="fas fa-plus"></i> Add New Event
+</button>
+<div id="eventForm" class="event-form" style="display:none;">
+<div class="event-form-group">
+<label for="eventYear">Year</label>
+<input type="number" id="eventYear" min="2024" max="2030" value="2024">
+</div>
+<div class="event-form-group">
+<label for="eventDate">Date</label>
+<input type="text" id="eventDate" placeholder="e.g., February 8-12, 2024">
+</div>
+<div class="event-form-group">
+<label for="eventTitle">Title</label>
+<input type="text" id="eventTitle" placeholder="Event title">
+</div>
+<div class="event-form-group">
+<label for="eventLocation">Location</label>
+<input type="text" id="eventLocation" placeholder="Event location">
+</div>
+<div class="event-form-group">
+<label for="eventDescription">Description</label>
+<textarea id="eventDescription" placeholder="Event description"></textarea>
+</div>
+<div class="event-form-group">
+<label for="eventDetail">Detailed Information</label>
+<textarea id="eventDetail" placeholder="Detailed information for Learn More modal"></textarea>
+</div>
+<div class="event-form-buttons">
+<button class="btn-small btn-save" onclick="saveEvent()">Save Event</button>
+<button class="btn-small btn-cancel" onclick="hideEventForm()">Cancel</button>
+</div>
+</div>
+<div id="eventList" class="event-list">
+<!-- Events will be listed here -->
+</div>
+</div>
+
+<!-- Project Images -->
+<div class="admin-section">
+<h4>Beethoven Project Images</h4>
+<div class="upload-area" id="beethovenUploadArea" onclick="document.getElementById('beethovenInput').click()">
+<i class="fas fa-music upload-icon"></i>
+<p class="upload-text">Upload Beethoven Project Image</p>
+<p class="upload-hint">PNG, JPG up to 5MB</p>
+<input type="file" id="beethovenInput" class="file-input" accept="image/*">
+<div class="upload-progress" id="beethovenProgress" style="width: 0%; display: none;"></div>
+</div>
+<div class="image-manager">
+<div class="current-image">
+<img id="currentBeethoven" src="" alt="Beethoven Project" style="display:none;">
+<div class="placeholder-image" id="beethovenPlaceholder">
+<span>No Beethoven image uploaded</span>
+</div>
+<div class="image-info" id="beethovenInfo" style="display:none;"></div>
+</div>
+</div>
+
+<div class="upload-area" id="beethovenDetailUploadArea" onclick="document.getElementById('beethovenDetailInput').click()">
+<i class="fas fa-music upload-icon"></i>
+<p class="upload-text">Upload Beethoven Detail Image</p>
+<p class="upload-hint">PNG, JPG up to 5MB</p>
+<input type="file" id="beethovenDetailInput" class="file-input" accept="image/*">
+<div class="upload-progress" id="beethovenDetailProgress" style="width: 0%; display: none;"></div>
+</div>
+<div class="image-manager">
+<div class="current-image">
+<img id="currentBeethovenDetail" src="" alt="Beethoven Detail" style="display:none;">
+<div class="placeholder-image" id="beethovenDetailPlaceholder">
+<span>No Beethoven detail image uploaded</span>
+</div>
+<div class="image-info" id="beethovenDetailInfo" style="display:none;"></div>
+</div>
+</div>
+</div>
+
+<!-- Artist Images -->
+<div class="admin-section">
+<h4>Artist Images</h4>
+
+<!-- Jap-Yeo Duo -->
+<div style="margin-bottom: 1.5rem;">
+<h5 style="margin-bottom: 0.75rem; color: var(--text-dark);">Jap-Yeo Duo</h5>
+<div class="upload-area" id="japYeoUploadArea" onclick="document.getElementById('japYeoInput').click()">
+<i class="fas fa-users upload-icon"></i>
+<p class="upload-text">Upload Jap-Yeo Duo Image</p>
+<input type="file" id="japYeoInput" class="file-input" accept="image/*">
+<div class="upload-progress" id="japYeoProgress" style="width: 0%; display: none;"></div>
+</div>
+<div class="image-manager">
+<div class="current-image">
+<img id="currentJapYeo" src="" alt="Jap-Yeo Duo" style="display:none;">
+<div class="placeholder-image" id="japYeoPlaceholder">
+<span>No Jap-Yeo Duo image uploaded</span>
+</div>
+<div class="image-info" id="japYeoInfo" style="display:none;"></div>
+</div>
+</div>
+</div>
+
+<!-- Dr. Kuei Pin Yeo -->
+<div style="margin-bottom: 1.5rem;">
+<h5 style="margin-bottom: 0.75rem; color: var(--text-dark);">Dr. Kuei Pin Yeo</h5>
+<div class="upload-area" id="kueiPinUploadArea" onclick="document.getElementById('kueiPinInput').click()">
+<i class="fas fa-user upload-icon"></i>
+<p class="upload-text">Upload Dr. Kuei Pin Yeo Image</p>
+<input type="file" id="kueiPinInput" class="file-input" accept="image/*">
+<div class="upload-progress" id="kueiPinProgress" style="width: 0%; display: none;"></div>
+</div>
+<div class="image-manager">
+<div class="current-image">
+<img id="currentKueiPin" src="" alt="Dr. Kuei Pin Yeo" style="display:none;">
+<div class="placeholder-image" id="kueiPinPlaceholder">
+<span>No Dr. Kuei Pin Yeo image uploaded</span>
+</div>
+<div class="image-info" id="kueiPinInfo" style="display:none;"></div>
+</div>
+</div>
+</div>
+
+<!-- Jap Tji Kien -->
+<div style="margin-bottom: 1.5rem;">
+<h5 style="margin-bottom: 0.75rem; color: var(--text-dark);">Jap Tji Kien</h5>
+<div class="upload-area" id="japTjiUploadArea" onclick="document.getElementById('japTjiInput').click()">
+<i class="fas fa-user upload-icon"></i>
+<p class="upload-text">Upload Jap Tji Kien Image</p>
+<input type="file" id="japTjiInput" class="file-input" accept="image/*">
+<div class="upload-progress" id="japTjiProgress" style="width: 0%; display: none;"></div>
+</div>
+<div class="image-manager">
+<div class="current-image">
+<img id="currentJapTji" src="" alt="Jap Tji Kien" style="display:none;">
+<div class="placeholder-image" id="japTjiPlaceholder">
+<span>No Jap Tji Kien image uploaded</span>
+</div>
+<div class="image-info" id="japTjiInfo" style="display:none;"></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Gallery Management -->
+<div class="admin-section">
+<h4>Gallery Management</h4>
+<div class="upload-area" id="galleryUploadArea" onclick="document.getElementById('galleryInput').click()">
+<i class="fas fa-images upload-icon"></i>
+<p class="upload-text">Upload Gallery Images</p>
+<p class="upload-hint">Select multiple images (PNG, JPG up to 5MB each)</p>
+<input type="file" id="galleryInput" class="file-input" accept="image/*" multiple>
+<div class="upload-progress" id="galleryProgress" style="width: 0%; display: none;"></div>
+</div>
+
+<div class="gallery-info" style="margin-top: 1.5rem; padding: 1.5rem; background: var(--bg-light); border-radius: 12px;">
+<p style="color: var(--text-dark);"><strong>Total Images:</strong> <span id="totalGalleryCount">0</span></p>
+<p style="color: var(--text-muted); font-size: 0.9rem;">Only first 10 images will be displayed on the main page</p>
+</div>
+
+<div id="galleryManager" class="image-manager">
+<!-- Gallery images will be displayed here -->
+</div>
+</div>
+</div>
+</div>
+
+<!-- Admin Toggle Button -->
+<button class="admin-toggle" id="adminToggle" onclick="handleAdminClick()">
+<i class="fas fa-cog"></i>
+</button>
+
+<!-- Splash Screen -->
+<div class="splash-screen" id="splashScreen">
+<div class="splash-content">
+<img class="splash-logo" id="splashLogoImg" src="" alt="YMJ Logo" style="display:none;">
+<div class="splash-text">YMJ Stage</div>
+<div class="splash-subtext">Performance & Artist Management Division</div>
+</div>
+<div class="splash-hint">Klik di mana saja untuk melanjutkan</div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content" id="mainContent">
+<!-- Header -->
+<header>
+<nav class="container">
+<div class="logo-container">
+<img class="logo-img" id="headerLogo" src="" alt="YMJ Logo" style="display:none;">
+<a href="#" class="logo-text">YMJ Stage</a>
+</div>
+<ul class="nav-menu">
+<li><a href="#home" data-lang-key="nav-home">🏠 Beranda</a></li>
+<li><a href="#about" data-lang-key="nav-about">📖 Tentang</a></li>
+<li><a href="#events" data-lang-key="nav-events">📅 Acara</a></li>
+<li><a href="#artists" data-lang-key="nav-artists">🎻 Artis</a></li>
+<li><a href="#beethoven" data-lang-key="nav-beethoven">🎼 Proyek</a></li>
+<li><a href="#gallery" data-lang-key="nav-gallery">📺 Media</a></li>
+<li><a href="#community" data-lang-key="nav-community">🤝 Komunitas</a></li>
+<li><a href="#contact" data-lang-key="nav-contact">📞 Kontak</a></li>
+</ul>
+<div class="language-selector">
+<button class="lang-btn active" data-lang="id" title="Bahasa Indonesia">🇮🇩</button>
+<button class="lang-btn" data-lang="en" title="English">🇬🇧</button>
+<button class="lang-btn" data-lang="zh" title="中文">🇨🇳</button>
+</div>
+<button class="mobile-menu-toggle">
+<i class="fas fa-bars"></i>
+</button>
+</nav>
+</header>
+
+<!-- Hero Section -->
+<section id="home" class="hero">
+<div class="hero-bg" id="heroBg"></div>
+<div class="container">
+<div class="hero-content">
+<!-- Indonesian Content -->
+<div class="content-id active">
+<h1 data-lang-key="hero-title">YMJ Stage</h1>
+<p class="hero-subtitle" data-lang-key="hero-subtitle">Mengkurasi Proyek Musik Klasik Berbasis Seniman di Panggung Internasional</p>
+<p class="hero-description" data-lang-key="hero-description">
+Selamat datang di YMJ Stage — sebuah platform yang digerakkan oleh seniman untuk mendukung musisi, mengembangkan proyek bermakna, dan menghubungkan visi artistik dengan panggung dunia.
+</p>
+<p class="hero-description" data-lang-key="hero-description-2">
+Kami tidak sekadar mengelola karier. Kami mendampingi perjalanan artistik, membangun kolaborasi jangka panjang, serta mengkurasi proyek yang berlandaskan integritas artistik, kesadaran historis, dan hubungan manusiawi.
+</p>
+<p class="hero-description" data-lang-key="hero-description-3">
+Situs ini adalah ruang perjumpaan — untuk menjelajahi gagasan, mengenal inisiatif, dan membangun kemitraan lintas budaya.
+</p>
+<p class="hero-description" data-lang-key="hero-description-4">
+Sebagai bagian dari Yayasan Musik Jakarta, YMJ berkomitmen pada keunggulan artistik serta dialog internasional antara Indonesia dan dunia.
+</p>
+<div class="mission-highlight" data-lang-key="hero-motto">“Bersama, kita memajukan seni. Bersama, kita mengangkat Indonesia.”</div>
+<div class="hero-buttons">
+<a href="#events" class="btn btn-primary" data-lang-key="hero-btn-events">
+<i class="fas fa-calendar-alt"></i> Jelajahi Acara Kami
+</a>
+<a href="#community" class="btn btn-secondary" data-lang-key="hero-btn-community">
+<i class="fas fa-users"></i> Bergabung dengan Komunitas
+</a>
+</div>
+</div>
+
+<!-- English Content -->
+<div class="content-en">
+<h1 data-lang-key="hero-title">YMJ Stage</h1>
+<p class="hero-subtitle" data-lang-key="hero-subtitle">Curating Artist-Led Classical Music Projects Worldwide</p>
+<p class="hero-description" data-lang-key="hero-description">
+Welcome to YMJ Stage — an artist-driven platform where musicians are supported, guided, and connected from Indonesia to the world. We do not simply manage careers. We accompany artistic journeys, develop meaningful projects, and build bridges between creative vision and global stages.
+</p>
+<p class="hero-description" data-lang-key="hero-description-2">
+This site is a meeting place — to explore ideas, get to know initiatives, and build cross-cultural partnerships.
+</p>
+<p class="hero-description" data-lang-key="hero-description-3">
+As part of Yayasan Musik Jakarta, YMJ is committed to artistic excellence and international dialogue between Indonesia and the world.
+</p>
+<div class="mission-highlight" data-lang-key="hero-motto">Together, we advance artistry. Together, we elevate Indonesia.</div>
+<div class="hero-buttons">
+<a href="#events" class="btn btn-primary" data-lang-key="hero-btn-events">
+<i class="fas fa-calendar-alt"></i> Explore Our Events
+</a>
+<a href="#community" class="btn btn-secondary" data-lang-key="hero-btn-community">
+<i class="fas fa-users"></i> Join Our Community
+</a>
+</div>
+</div>
+
+<!-- Chinese Content -->
+<div class="content-zh">
+<h1 data-lang-key="hero-title">YMJ Stage</h1>
+<p class="hero-subtitle" data-lang-key="hero-subtitle">策划以艺术家为核心的国际古典音乐项目</p>
+<p class="hero-description" data-lang-key="hero-description">
+欢迎来到 YMJ Stage —— 一个以艺术家为本，致力于支持音乐家成长、发展深度项目，并将艺术愿景与国际舞台相连的平台。我们并非只从事演出或职业管理。我们陪伴艺术旅程，培育长期合作关系。
+</p>
+<p class="hero-description" data-lang-key="hero-description-2">
+这是一个相遇之地 —— 探索创意、了解倡议、建立跨文化伙伴关系。
+</p>
+<p class="hero-description" data-lang-key="hero-description-3">
+作为雅加达音乐基金会的一部分，YMJ 致力于在推动艺术卓越的同时，促进印度尼西亚与世界之间的艺术对话。
+</p>
+<div class="mission-highlight" data-lang-key="hero-motto">携手同行，我们推进艺术。携手同行，我们让印度尼西亚走向世界。</div>
+<div class="hero-buttons">
+<a href="#events" class="btn btn-primary" data-lang-key="hero-btn-events">
+<i class="fas fa-calendar-alt"></i> 探索我们的活动
+</a>
+<a href="#community" class="btn btn-secondary" data-lang-key="hero-btn-community">
+<i class="fas fa-users"></i> 加入我们的社区
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- YMJ Stage Caption Section -->
+<section id="ymj-caption" class="ymj-caption">
+<div class="container">
+<div class="ymj-caption-header">
+<h1 class="ymj-caption-title">YMJ STAGE</h1>
+<h2 class="ymj-caption-subtitle">Performance & Artist Management Division</h2>
+<h3 class="ymj-caption-division">A division of Yayasan Musik Jakarta</h3>
+<p class="ymj-caption-tagline">Membawa Seniman Indonesia ke Panggung Dunia melalui kolaborasi dan kreativitas</p>
+</div>
+
+<div class="ymj-caption-content">
+<p>YMJ STAGE lahir dari keyakinan bahwa seni adalah ruang hidup — tempat gagasan bernapas, imajinasi bertumbuh, dan makna dibentuk melalui perjumpaan.</p>
+
+<p>Di sini, para seniman tidak sekadar tampil, melainkan diajak untuk berproses, berdialog, dan berkembang dalam ekosistem yang menghargai keutuhan perjalanan artistik.</p>
+
+<p>Di tengah laju teknologi dan kecerdasan buatan, kami percaya bahwa kreativitas manusia tetap menjadi cahaya utama. Bukan sekadar hasil akhir, tetapi cara berpikir, kepekaan rasa, dan keberanian untuk menafsirkan dunia adalah sumber daya yang tak dapat digantikan.</p>
+
+<p>YMJ STAGE hadir sebagai jawaban bagi para pelaku seni — bahwa kreativitas tidak akan tergerus oleh teknologi, melainkan akan terus berkelanjutan ketika dirawat melalui kolaborasi yang jujur, ruang refleksi yang aman, dan visi artistik yang berpijak pada nilai kemanusiaan.</p>
+
+<p>Melalui proyek pertunjukan yang dikurasi dengan kesadaran historis, kerja sama lintas budaya, serta pendampingan artistik yang berlandaskan integritas, YMJ STAGE membuka jalan bagi seniman Indonesia untuk hadir di panggung internasional bukan sekadar sebagai tamu, melainkan sebagai mitra dialog yang setara dalam percakapan seni dunia.</p>
+</div>
+
+<div class="ymj-caption-final">
+<p>Di YMJ STAGE, seni tidak hanya dipresentasikan.</p>
+<p>Ia dirawat.</p>
+<p>Ia dipertanyakan.</p>
+<p>Ia dipertemukan dengan dunia.</p>
+</div>
+</div>
+</section>
+
+<!-- Mission Section -->
+<section id="about" class="mission">
+<div class="container">
+<h2 class="section-title" data-lang-key="about-title">Tentang YMJ</h2>
+
+<!-- Indonesian Content -->
+<div class="content-id active">
+<div class="mission-content">
+<p data-lang-key="about-subtitle">Berbasis Seniman · Berlandaskan Relasi · Berorientasi Internasional</p>
+<p data-lang-key="about-description">
+YMJ STAGE merupakan divisi Performance & Artist Management yang hadir untuk mendampingi proyek musik klasik—diprakarsai oleh seniman, dibangun melalui relasi, dan ditumbuhkan dengan visi jangka panjang.
+</p>
+<p class="mission-highlight" data-lang-key="about-motto">“Musik sebagai panggilan, tumbuh lewat kepercayaan dan makna.”</p>
+<p data-lang-key="about-description-2">
+Karier artistik yang berkelanjutan tumbuh melalui kepercayaan, tujuan bersama, dan relasi yang bermakna.
+</p>
+<p data-lang-key="about-y-title">Di YMJ:</p>
+<p data-lang-key="about-y-1">Seniman memperoleh arahan,</p>
+<p data-lang-key="about-y-2">Proyek mendapatkan struktur,</p>
+<p data-lang-key="about-y-3">Dan kolaborasi berkembang menjadi kemitraan jangka panjang.</p>
+<p class="mission-highlight" data-lang-key="about-motto-2">Kami percaya musik adalah panggilan, bukan komoditas — dan karier tumbuh melalui kepercayaan, tujuan bersama, dan hubungan yang bermakna.</p>
+<p data-lang-key="about-here-title">Di sini,</p>
+<p data-lang-key="about-here-1">seniman menemukan arahan,</p>
+<p data-lang-key="about-here-2">proyek menemukan kejelasan,</p>
+<p data-lang-key="about-here-3">dan kolaborasi menjadi persahabatan.</p>
+</div>
+</div>
+
+<!-- English Content -->
+<div class="content-en">
+<div class="mission-content">
+<p data-lang-key="about-subtitle">Artist-Led · Relationship-Based · Internationally-Oriented</p>
+<p data-lang-key="about-description">
+YMJ Performance & Artist Management Division was founded to support artist-initiated classical music projects developed with long-term vision.
+</p>
+<p class="mission-highlight" data-lang-key="about-motto">We believe that music is a calling, not a commodity.</p>
+<p data-lang-key="about-description-2">
+Sustainable artistic careers grow through trust, shared purpose, and meaningful relationships.
+</p>
+<p data-lang-key="about-y-title">At YMJ:</p>
+<p data-lang-key="about-y-1">Artists receive guidance,</p>
+<p data-lang-key="about-y-2">Projects gain structure,</p>
+<p data-lang-key="about-y-3">And collaborations evolve into long-term partnerships.</p>
+<p class="mission-highlight" data-lang-key="about-motto-2">We believe music is a calling, not a commodity — and careers grow through trust, shared purpose, and meaningful relationships.</p>
+<p data-lang-key="about-here-title">Here,</p>
+<p data-lang-key="about-here-1">artists find guidance,</p>
+<p data-lang-key="about-here-2">projects find clarity,</p>
+<p data-lang-key="about-here-3">and collaborations become friendships.</p>
+</div>
+</div>
+
+<!-- Chinese Content -->
+<div class="content-zh">
+<div class="mission-content">
+<p data-lang-key="about-subtitle">以艺术家为本 · 以关系为基石 · 国际化导向</p>
+<p data-lang-key="about-description">
+YMJ 演出与艺术家管理部致力于支持由艺术家发起、以长远愿景发展的古典音乐项目。
+</p>
+<p class="mission-highlight" data-lang-key="about-motto">我们相信，音乐是一份使命，而非商品。</p>
+<p data-lang-key="about-description-2">
+可持续的艺术生涯源于信任、共同愿景与有意义的关系。
+</p>
+<p data-lang-key="about-y-title">在 YMJ：</p>
+<p data-lang-key="about-y-1">艺术家获得指导，</p>
+<p data-lang-key="about-y-2">项目获得结构，</p>
+<p data-lang-key="about-y-3">合作发展为长期伙伴关系。</p>
+<p class="mission-highlight" data-lang-key="about-motto-2">我们相信，音乐是一份使命，而非商品——艺术生涯源于信任、共同愿景与有意义的关系。</p>
+<p data-lang-key="about-here-title">在这里，</p>
+<p data-lang-key="about-here-1">艺术家找到指导，</p>
+<p data-lang-key="about-here-2">项目找到清晰，</p>
+<p data-lang-key="about-here-3">合作成为友谊。</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Events Section -->
+<section id="events" class="events">
+<div class="container">
+<h2 class="section-title" data-lang-key="events-title">Acara Kami</h2>
+
+<div class="events-timeline" id="eventsTimeline">
+<!-- Events will be dynamically loaded here -->
+</div>
+</div>
+</section>
+
+<!-- Artists Section -->
+<section id="artists" class="artists">
+<div class="container">
+<h2 class="section-title" data-lang-key="artists-title">Artis Kami</h2>
+
+<div class="artists-grid">
+<!-- Jap-Yeo Duo -->
+<div class="artist-card fade-in">
+<div class="artist-image">
+<img id="japYeoImg" src="" alt="Jap-Yeo Duo" style="display:none;">
+<div class="placeholder-image" id="japYeoPlaceholder">
+<span>No Jap-Yeo Duo image uploaded</span>
+</div>
+</div>
+<div class="artist-info">
+<!-- Indonesian Content -->
+<div class="content-id active">
+<h3 class="artist-name" data-lang-key="artist-japyeo-name">Jap–Yeo Duo</h3>
+<p class="artist-role" data-lang-key="artist-japyeo-role">Biola & Piano</p>
+<p class="artist-bio" data-lang-key="artist-japyeo-bio">
+Jap–Yeo Duo mempertemukan pemain biola Jap Tji Kien dan pianis Dr. Kuei Pin Yeo dalam kemitraan jangka panjang yang berfokus pada musik kamar dengan kedalaman dan kejernihan artistik.
+</p>
+<div class="artist-links">
+<a href="#" onclick="showArtistDetail('japYeo', 'bio'); return false;" data-lang-key="artist-bio">Biografi</a>
+<a href="#" onclick="showArtistDetail('japYeo', 'repertoire'); return false;" data-lang-key="artist-repertoire">Repertoar</a>
+<a href="#" onclick="showArtistDetail('japYeo', 'media'); return false;" data-lang-key="artist-media">Media</a>
+</div>
+</div>
+
+<!-- English Content -->
+<div class="content-en">
+<h3 class="artist-name" data-lang-key="artist-japyeo-name">Jap–Yeo Duo</h3>
+<p class="artist-role" data-lang-key="artist-japyeo-role">Violin & Piano</p>
+<p class="artist-bio" data-lang-key="artist-japyeo-bio">
+Jap–Yeo Duo brings together violinist Jap Tji Kien and pianist Dr. Kuei Pin Yeo in a long-term partnership focused on chamber music of depth and artistic clarity.
+</p>
+<div class="artist-links">
+<a href="#" onclick="showArtistDetail('japYeo', 'bio'); return false;" data-lang-key="artist-bio">Biography</a>
+<a href="#" onclick="showArtistDetail('japYeo', 'repertoire'); return false;" data-lang-key="artist-repertoire">Repertoire</a>
+<a href="#" onclick="showArtistDetail('japYeo', 'media'); return false;" data-lang-key="artist-media">Media</a>
+</div>
+</div>
+
+<!-- Chinese Content -->
+<div class="content-zh">
+<h3 class="artist-name" data-lang-key="artist-japyeo-name">Jap–Yeo 二重奏</h3>
+<p class="artist-role" data-lang-key="artist-japyeo-role">小提琴与钢琴</p>
+<p class="artist-bio" data-lang-key="artist-japyeo-bio">
+Jap–Yeo 二重奏由小提琴家叶至坚与钢琴家杨圭斌博士组成，是一组以深度、清晰度与思想性见长的室内乐组合。
+</p>
+<div class="artist-links">
+<a href="#" onclick="showArtistDetail('japYeo', 'bio'); return false;" data-lang-key="artist-bio">传记</a>
+<a href="#" onclick="showArtistDetail('japYeo', 'repertoire'); return false;" data-lang-key="artist-repertoire">曲目</a>
+<a href="#" onclick="showArtistDetail('japYeo', 'media'); return false;" data-lang-key="artist-media">媒体</a>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Dr. Kuei Pin Yeo -->
+<div class="artist-card fade-in">
+<div class="artist-image">
+<img id="kueiPinImg" src="" alt="Dr. Kuei Pin Yeo" style="display:none;">
+<div class="placeholder-image" id="kueiPinPlaceholder">
+<span>No Dr. Kuei Pin Yeo image uploaded</span>
+</div>
+</div>
+<div class="artist-info">
+<!-- Indonesian Content -->
+<div class="content-id active">
+<h3 class="artist-name" data-lang-key="artist-kueipin-name">Dr. Kuei Pin Yeo</h3>
+<p class="artist-role" data-lang-key="artist-kueipin-role">Pianis</p>
+<p class="artist-bio" data-lang-key="artist-kueipin-bio">
+Dr. Kuei Pin Yeo adalah pianis Indonesia terkemuka dan doktor musik pertama Indonesia dalam bidang piano performance.
+</p>
+<div class="artist-links">
+<a href="#" onclick="showArtistDetail('kueiPin', 'bio'); return false;" data-lang-key="artist-bio">Biografi</a>
+<a href="#" onclick="showArtistDetail('kueiPin', 'repertoire'); return false;" data-lang-key="artist-repertoire">Repertoar</a>
+<a href="#" onclick="showArtistDetail('kueiPin', 'media'); return false;" data-lang-key="artist-media">Media</a>
+</div>
+</div>
+
+<!-- English Content -->
+<div class="content-en">
+<h3 class="artist-name" data-lang-key="artist-kueipin-name">Dr. Kuei Pin Yeo</h3>
+<p class="artist-role" data-lang-key="artist-kueipin-role">Pianist</p>
+<p class="artist-bio" data-lang-key="artist-kueipin-bio">
+Dr. Kuei Pin Yeo is a prominent Indonesian pianist and Indonesia's first doctor of music in piano performance.
+</p>
+<div class="artist-links">
+<a href="#" onclick="showArtistDetail('kueiPin', 'bio'); return false;" data-lang-key="artist-bio">Biography</a>
+<a href="#" onclick="showArtistDetail('kueiPin', 'repertoire'); return false;" data-lang-key="artist-repertoire">Repertoire</a>
+<a href="#" onclick="showArtistDetail('kueiPin', 'media'); return false;" data-lang-key="artist-media">Media</a>
+</div>
+</div>
+
+<!-- Chinese Content -->
+<div class="content-zh">
+<h3 class="artist-name" data-lang-key="artist-kueipin-name">杨圭斌博士</h3>
+<p class="artist-role" data-lang-key="artist-kueipin-role">钢琴家</p>
+<p class="artist-bio" data-lang-key="artist-kueipin-bio">
+杨圭斌博士是印度尼西亚杰出的钢琴家，印度尼西亚首位钢琴演奏艺术音乐博士。
+</p>
+<div class="artist-links">
+<a href="#" onclick="showArtistDetail('kueiPin', 'bio'); return false;" data-lang-key="artist-bio">传记</a>
+<a href="#" onclick="showArtistDetail('kueiPin', 'repertoire'); return false;" data-lang-key="artist-repertoire">曲目</a>
+<a href="#" onclick="showArtistDetail('kueiPin', 'media'); return false;" data-lang-key="artist-media">媒体</a>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Jap Tji Kien -->
+<div class="artist-card fade-in">
+<div class="artist-image">
+<img id="japTjiImg" src="" alt="Jap Tji Kien" style="display:none;">
+<div class="placeholder-image" id="japTjiPlaceholder">
+<span>No Jap Tji Kien image uploaded</span>
+</div>
+</div>
+<div class="artist-info">
+<!-- Indonesian Content -->
+<div class="content-id active">
+<h3 class="artist-name" data-lang-key="artist-japtji-name">Jap Tji Kien</h3>
+<p class="artist-role" data-lang-key="artist-japtji-role">Violinis & Dirigen</p>
+<p class="artist-bio" data-lang-key="artist-japtji-bio">
+Jap Tji Kien adalah salah satu violinis dan dirigen paling dihormati di Indonesia, penerima FRSM pertama di Asia Tenggara.
+</p>
+<div class="artist-links">
+<a href="#" onclick="showArtistDetail('japTji', 'bio'); return false;" data-lang-key="artist-bio">Biografi</a>
+<a href="#" onclick="showArtistDetail('japTji', 'repertoire'); return false;" data-lang-key="artist-repertoire">Repertoar</a>
+<a href="#" onclick="showArtistDetail('japTji', 'media'); return false;" data-lang-key="artist-media">Media</a>
+</div>
+</div>
+
+<!-- English Content -->
+<div class="content-en">
+<h3 class="artist-name" data-lang-key="artist-japtji-name">Jap Tji Kien</h3>
+<p class="artist-role" data-lang-key="artist-japtji-role">Violinist & Conductor</p>
+<p class="artist-bio" data-lang-key="artist-japtji-bio">
+Jap Tji Kien is one of Indonesia's most respected violinists and conductors, the first FRSM recipient in Southeast Asia.
+</p>
+<div class="artist-links">
+<a href="#" onclick="showArtistDetail('japTji', 'bio'); return false;" data-lang-key="artist-bio">Biography</a>
+<a href="#" onclick="showArtistDetail('japTji', 'repertoire'); return false;" data-lang-key="artist-repertoire">Repertoire</a>
+<a href="#" onclick="showArtistDetail('japTji', 'media'); return false;" data-lang-key="artist-media">Media</a>
+</div>
+</div>
+
+<!-- Chinese Content -->
+<div class="content-zh">
+<h3 class="artist-name" data-lang-key="artist-japtji-name">叶至坚</h3>
+<p class="artist-role" data-lang-key="artist-japtji-role">小提琴家兼指挥家</p>
+<p class="artist-bio" data-lang-key="artist-japtji-bio">
+叶至坚是印度尼西亚最受尊敬的小提琴家与指挥家之一，东南亚首位获得英国皇家音乐学院院士奖（FRSM, London）的音乐家。
+</p>
+<div class="artist-links">
+<a href="#" onclick="showArtistDetail('japTji', 'bio'); return false;" data-lang-key="artist-bio">传记</a>
+<a href="#" onclick="showArtistDetail('japTji', 'repertoire'); return false;" data-lang-key="artist-repertoire">曲目</a>
+<a href="#" onclick="showArtistDetail('japTji', 'media'); return false;" data-lang-key="artist-media">媒体</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Beethoven Project Section -->
+<section id="beethoven" class="featured-project">
+<div class="container">
+<h2 class="section-title" data-lang-key="beethoven-title">Proyek Unggulan</h2>
+
+<div class="project-card">
+<div class="project-image">
+<img id="beethovenDetailImg" src="" alt="Beethoven Project Detail" style="display:none;">
+<div class="placeholder-image" id="beethovenDetailPlaceholder" style="height:400px;">
+<span>No Beethoven detail image uploaded</span>
+</div>
+</div>
+<div class="project-content">
+<!-- Indonesian Content -->
+<div class="content-id active">
+<h3 class="project-title" data-lang-key="beethoven-project-title">Beethoven Bicentennial Initiative (2027–2028)</h3>
+<p class="project-description" data-lang-key="beethoven-subtitle">
+Inisiatif Unggulan YMJ Performance & Artist Management Division
+</p>
+<p class="project-description" data-lang-key="beethoven-organization">
+Di bawah Yayasan Musik Jakarta
+</p>
+<h4 style="margin-bottom: 1.5rem; color: var(--primary);" data-lang-key="beethoven-overview">Gambaran Umum</h4>
+<p class="project-description" data-lang-key="beethoven-overview-desc">
+Dalam rangka memperingati 200 tahun wafatnya Ludwig van Beethoven, YMJ menginisiasi proyek artistik jangka panjang yang berfokus pada karya Beethoven untuk biola dan piano.
+</p>
+<h4 style="margin-bottom: 1.5rem; color: var(--primary);" data-lang-key="beethoven-artistic">Perspektif Artistik</h4>
+<p class="project-description" data-lang-key="beethoven-artistic-desc">
+Karya Beethoven untuk biola dan piano menandai transformasi penting dalam sejarah musik kamar, dengan membangun relasi setara antara instrumen.
+</p>
+<h4 style="margin-bottom: 1.5rem; color: var(--primary);" data-lang-key="beethoven-scope">Lingkup Inisiatif</h4>
+<p class="project-description" data-lang-key="beethoven-scope-desc">
+Inti dari proyek ini adalah keterlibatan berkelanjutan dengan repertoar Beethoven untuk biola dan piano, yang dikembangkan melalui studi jangka panjang.
+</p>
+<h4 style="margin-bottom: 1.5rem; color: var(--primary);" data-lang-key="beethoven-musicians">Para Musisi</h4>
+<p class="project-description" data-lang-key="beethoven-musicians-desc">
+Beethoven Bicentennial Initiative dikembangkan dan dibawakan oleh Jap–Yeo Duo, kemitraan antara pemain biola Jap Tji Kien dan pianis Dr. Kuei Pin Yeo.
+</p>
+<h4 style="margin-bottom: 1.5rem; color: var(--primary);" data-lang-key="beethoven-formats">Format Proyek</h4>
+<ul style="list-style: none; padding: 0;">
+<li style="margin-bottom: 0.75rem;" data-lang-key="beethoven-format-1">• Resital Tunggal - Program kurasi yang menampilkan sonata utama</li>
+<li style="margin-bottom: 0.75rem;" data-lang-key="beethoven-format-2">• Seri Pendek (2-3 konser) - Menelusuri evolusi gaya Beethoven</li>
+<li style="margin-bottom: 0.75rem;" data-lang-key="beethoven-format-3">• Siklus Lengkap - Siklus sonata biola-piano lengkap</li>
+<li data-lang-key="beethoven-format-4">• Format Diperluas - Resital kuliah, Masterclass, Residensi</li>
+</ul>
+<a href="#contact" class="btn btn-primary" style="margin-top: 2rem;" data-lang-key="beethoven-inquire">Tanyakan Tentang Proyek Ini</a>
+</div>
+
+<!-- English Content -->
+<div class="content-en">
+<h3 class="project-title" data-lang-key="beethoven-project-title">Beethoven Bicentennial Initiative (2027–2028)</h3>
+<p class="project-description" data-lang-key="beethoven-subtitle">
+Flagship Initiative of YMJ Performance & Artist Management Division
+</p>
+<p class="project-description" data-lang-key="beethoven-organization">
+Under Yayasan Musik Jakarta
+</p>
+<h4 style="margin-bottom: 1.5rem; color: var(--primary);" data-lang-key="beethoven-overview">Overview</h4>
+<p class="project-description" data-lang-key="beethoven-overview-desc">
+In commemoration of the 200th anniversary of Ludwig van Beethoven's death, YMJ initiates a long-term artistic project focusing on Beethoven's works for violin and piano.
+</p>
+<h4 style="margin-bottom: 1.5rem; color: var(--primary);" data-lang-key="beethoven-artistic">Artistic Perspective</h4>
+<p class="project-description" data-lang-key="beethoven-artistic-desc">
+Beethoven's works for violin and piano mark a significant transformation in chamber music history, establishing equal relationships between instruments.
+</p>
+<h4 style="margin-bottom: 1.5rem; color: var(--primary);" data-lang-key="beethoven-scope">Initiative Scope</h4>
+<p class="project-description" data-lang-key="beethoven-scope-desc">
+The core of this project is sustained engagement with Beethoven's violin and piano repertoire, developed through long-term study.
+</p>
+<h4 style="margin-bottom: 1.5rem; color: var(--primary);" data-lang-key="beethoven-musicians">The Musicians</h4>
+<p class="project-description" data-lang-key="beethoven-musicians-desc">
+The Beethoven Bicentennial Initiative is developed and performed by Jap–Yeo Duo, a partnership between violinist Jap Tji Kien and pianist Dr. Kuei Pin Yeo.
+</p>
+<h4 style="margin-bottom: 1.5rem; color: var(--primary);" data-lang-key="beethoven-formats">Project Formats</h4>
+<ul style="list-style: none; padding: 0;">
+<li style="margin-bottom: 0.75rem;" data-lang-key="beethoven-format-1">• Single Recital - Curated program featuring major sonatas</li>
+<li style="margin-bottom: 0.75rem;" data-lang-key="beethoven-format-2">• Short Series (2-3 concerts) - Tracing Beethoven's stylistic evolution</li>
+<li style="margin-bottom: 0.75rem;" data-lang-key="beethoven-format-3">• Complete Cycle - Complete violin-piano sonata cycle</li>
+<li data-lang-key="beethoven-format-4">• Extended Format - Lecture recitals, Masterclasses, Residencies</li>
+</ul>
+<a href="#contact" class="btn btn-primary" style="margin-top: 2rem;" data-lang-key="beethoven-inquire">Inquire About This Project</a>
+</div>
+
+<!-- Chinese Content -->
+<div class="content-zh">
+<h3 class="project-title" data-lang-key="beethoven-project-title">贝多芬二百周年倡议（2027–2028）</h3>
+<p class="project-description" data-lang-key="beethoven-subtitle">
+YMJ 演出与艺术家管理部旗舰倡议
+</p>
+<p class="project-description" data-lang-key="beethoven-organization">
+雅加达音乐基金会旗下
+</p>
+<h4 style="margin-bottom: 1.5rem; color: var(--primary);" data-lang-key="beethoven-overview">概述</h4>
+<p class="project-description" data-lang-key="beethoven-overview-desc">
+为纪念路德维希·范·贝多芬逝世二百周年，YMJ 发起一项长期艺术项目，专注于贝多芬的小提琴与钢琴作品。
+</p>
+<h4 style="margin-bottom: 1.5rem; color: var(--primary);" data-lang-key="beethoven-artistic">艺术视角</h4>
+<p class="project-description" data-lang-key="beethoven-artistic-desc">
+贝多芬的小提琴与钢琴作品标志着室内乐史上的重要转变，建立了乐器间的平等关系。
+</p>
+<h4 style="margin-bottom: 1.5rem; color: var(--primary);" data-lang-key="beethoven-scope">倡议范围</h4>
+<p class="project-description" data-lang-key="beethoven-scope-desc">
+本项目的核心是通过长期学习与发展，持续参与贝多芬的小提琴与钢琴曲目。
+</p>
+<h4 style="margin-bottom: 1.5rem; color: var(--primary);" data-lang-key="beethoven-musicians">音乐家</h4>
+<p class="project-description" data-lang-key="beethoven-musicians-desc">
+贝多芬二百周年倡议由 Jap–Yeo 二重奏开发并演出，这是小提琴家叶至坚与钢琴家杨圭斌博士的合作。
+</p>
+<h4 style="margin-bottom: 1.5rem; color: var(--primary);" data-lang-key="beethoven-formats">项目形式</h4>
+<ul style="list-style: none; padding: 0;">
+<li style="margin-bottom: 0.75rem;" data-lang-key="beethoven-format-1">• 单场独奏会 - 精选主要奏鸣曲的节目</li>
+<li style="margin-bottom: 0.75rem;" data-lang-key="beethoven-format-2">• 短期系列（2-3 场） - 追溯贝多芬风格演变</li>
+<li style="margin-bottom: 0.75rem;" data-lang-key="beethoven-format-3">• 完整周期 - 完整的小提琴-钢琴奏鸣曲周期</li>
+<li data-lang-key="beethoven-format-4">• 扩展形式 - 讲座独奏会、大师班、驻院项目</li>
+</ul>
+<a href="#contact" class="btn btn-primary" style="margin-top: 2rem;" data-lang-key="beethoven-inquire">咨询此项目</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Gallery Section -->
+<section id="gallery" class="featured-project">
+<div class="container">
+<h2 class="section-title" data-lang-key="gallery-title">Media</h2>
+
+<div class="gallery-container">
+<div class="gallery-grid" id="galleryGrid">
+<!-- Gallery items will be dynamically added here -->
+</div>
+
+<div class="gallery-info">
+<div class="gallery-count">
+<span data-lang-key="gallery-showing">Menampilkan</span> <span id="visibleCount">0</span> <span data-lang-key="gallery-of">dari</span> <span id="totalCount">0</span> <span data-lang-key="gallery-photos">foto</span>
+</div>
+<a href="#" class="gallery-view-all" onclick="openFullGallery(); return false;">
+<span data-lang-key="gallery-view-all">Lihat Semua Galeri</span> <i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Community Section -->
+<section id="community" class="community">
+<div class="container">
+<h2 class="section-title" data-lang-key="community-title">Komunitas & Ajakan Bertindak</h2>
+
+<!-- Indonesian Content -->
+<div class="content-id active">
+<div class="mission-content">
+<h3 data-lang-key="community-invitation">Undangan</h3>
+<p data-lang-key="community-invitation-desc">
+Jika Anda seorang seniman, presenter, pendidik, pengelola, atau sahabat seni — kami menyambut Anda dengan hangat. Mari berbagi gagasan, menjalin keterhubungan, mencipta karya yang bermakna, dan membangun persahabatan melalui musik.
+</p>
+<p class="mission-highlight" data-lang-key="community-motto">Bersama, mari kita memelihara talenta, merayakan seni, dan membawa musik ke tempat di mana ia paling dibutuhkan.</p>
+</div>
+
+<div class="community-grid">
+<div class="community-card">
+<i class="fas fa-user-friends"></i>
+<h3 data-lang-key="community-indonesian-title">Bagi Seniman Indonesia</h3>
+<p data-lang-key="community-indonesian-desc">Temukan peluang, perwakilan, masterclass, kompetisi, dan platform pertunjukan.</p>
+</div>
+<div class="community-card">
+<i class="fas fa-globe"></i>
+<h3 data-lang-key="community-international-title">Bagi Seniman Internasional</h3>
+<p data-lang-key="community-international-desc">Berkolaborasi dengan kami — jelajahi bagaimana Anda dapat tampil, mengajar, berkolaborasi, atau tur di Indonesia.</p>
+</div>
+<div class="community-card">
+<i class="fas fa-university"></i>
+<h3 data-lang-key="community-institutions-title">Bagi Institusi & Penyelenggara</h3>
+<p data-lang-key="community-institutions-desc">Kami menyediakan kurasi, konsultasi, dukungan pemesanan, dan layanan pengembangan proyek.</p>
+</div>
+<div class="community-card">
+<i class="fas fa-heart"></i>
+<h3 data-lang-key="community-supporters-title">Bagi Teman & Pendukung</h3>
+<p data-lang-key="community-supporters-desc">Tetap terhubung — bergabunglah dengan komunitas kami.</p>
+</div>
+</div>
+
+<div class="mission-content" style="margin-top: 3rem;">
+<h3 data-lang-key="community-form-title">Formulir Pendaftaran Singkat:</h3>
+<form id="communityForm" style="max-width: 700px; margin: 0 auto;">
+<div class="form-group">
+<label for="formName" data-lang-key="form-name">Nama:</label>
+<input type="text" id="formName" name="name" required>
+</div>
+<div class="form-group">
+<label for="formEmail" data-lang-key="form-email">Email:</label>
+<input type="email" id="formEmail" name="email" required>
+</div>
+<div class="form-group">
+<label for="formPhone" data-lang-key="form-phone">No. Hp:</label>
+<input type="tel" id="formPhone" name="phone">
+</div>
+<div class="form-group">
+<label for="formInterest" data-lang-key="form-interest">Minat/koneksi artistik:</label>
+<textarea id="formInterest" name="interest" rows="3"></textarea>
+</div>
+<button type="submit" class="btn btn-primary" data-lang-key="form-submit">Kirim</button>
+</form>
+</div>
+</div>
+
+<!-- English Content -->
+<div class="content-en">
+<div class="mission-content">
+<h3 data-lang-key="community-invitation">Invitation</h3>
+<p data-lang-key="community-invitation-desc">
+If you are an artist, presenter, educator, manager, or friend of the arts — we welcome you warmly. Let's share ideas, build connections, create meaningful works, and build friendships through music.
+</p>
+<p class="mission-highlight" data-lang-key="community-motto">Together, let's nurture talent, celebrate art, and bring music where it's needed most.</p>
+</div>
+
+<div class="community-grid">
+<div class="community-card">
+<i class="fas fa-user-friends"></i>
+<h3 data-lang-key="community-indonesian-title">For Indonesian Artists</h3>
+<p data-lang-key="community-indonesian-desc">Discover opportunities, representation, masterclasses, competitions, and performance platforms.</p>
+</div>
+<div class="community-card">
+<i class="fas fa-globe"></i>
+<h3 data-lang-key="community-international-title">For International Artists</h3>
+<p data-lang-key="community-international-desc">Collaborate with us — explore how you can perform, teach, collaborate, or tour in Indonesia.</p>
+</div>
+<div class="community-card">
+<i class="fas fa-university"></i>
+<h3 data-lang-key="community-institutions-title">For Institutions & Presenters</h3>
+<p data-lang-key="community-institutions-desc">We provide curation, consultation, booking support, and project development services.</p>
+</div>
+<div class="community-card">
+<i class="fas fa-heart"></i>
+<h3 data-lang-key="community-supporters-title">For Friends & Supporters</h3>
+<p data-lang-key="community-supporters-desc">Stay connected — join our community.</p>
+</div>
+</div>
+
+<div class="mission-content" style="margin-top: 3rem;">
+<h3 data-lang-key="community-form-title">Quick Registration Form:</h3>
+<form id="communityForm" style="max-width: 700px; margin: 0 auto;">
+<div class="form-group">
+<label for="formName" data-lang-key="form-name">Name:</label>
+<input type="text" id="formName" name="name" required>
+</div>
+<div class="form-group">
+<label for="formEmail" data-lang-key="form-email">Email:</label>
+<input type="email" id="formEmail" name="email" required>
+</div>
+<div class="form-group">
+<label for="formPhone" data-lang-key="form-phone">Phone:</label>
+<input type="tel" id="formPhone" name="phone">
+</div>
+<div class="form-group">
+<label for="formInterest" data-lang-key="form-interest">Artistic interest/connection:</label>
+<textarea id="formInterest" name="interest" rows="3"></textarea>
+</div>
+<button type="submit" class="btn btn-primary" data-lang-key="form-submit">Submit</button>
+</form>
+</div>
+</div>
+
+<!-- Chinese Content -->
+<div class="content-zh">
+<div class="mission-content">
+<h3 data-lang-key="community-invitation">邀请</h3>
+<p data-lang-key="community-invitation-desc">
+如果您是艺术家、演出者、教育者、管理者或艺术朋友——我们热烈欢迎您。让我们分享创意，建立联系，创作有意义的作品，通过音乐建立友谊。
+</p>
+<p class="mission-highlight" data-lang-key="community-motto">携手同行，让我们培养才华，庆祝艺术，将音乐带到最需要的地方。</p>
+</div>
+
+<div class="community-grid">
+<div class="community-card">
+<i class="fas fa-user-friends"></i>
+<h3 data-lang-key="community-indonesian-title">印尼艺术家</h3>
+<p data-lang-key="community-indonesian-desc">发现机会、代表、大师班、比赛和演出平台。</p>
+</div>
+<div class="community-card">
+<i class="fas fa-globe"></i>
+<h3 data-lang-key="community-international-title">国际艺术家</h3>
+<p data-lang-key="community-international-desc">与我们合作——探索您如何在印尼演出、教学、合作或巡演。</p>
+</div>
+<div class="community-card">
+<i class="fas fa-university"></i>
+<h3 data-lang-key="community-institutions-title">机构与主办方</h3>
+<p data-lang-key="community-institutions-desc">我们提供策划、咨询、预订支持和项目开发服务。</p>
+</div>
+<div class="community-card">
+<i class="fas fa-heart"></i>
+<h3 data-lang-key="community-supporters-title">朋友与支持者</h3>
+<p data-lang-key="community-supporters-desc">保持联系——加入我们的社区。</p>
+</div>
+</div>
+
+<div class="mission-content" style="margin-top: 3rem;">
+<h3 data-lang-key="community-form-title">快速注册表：</h3>
+<form id="communityForm" style="max-width: 700px; margin: 0 auto;">
+<div class="form-group">
+<label for="formName" data-lang-key="form-name">姓名：</label>
+<input type="text" id="formName" name="name" required>
+</div>
+<div class="form-group">
+<label for="formEmail" data-lang-key="form-email">邮箱：</label>
+<input type="email" id="formEmail" name="email" required>
+</div>
+<div class="form-group">
+<label for="formPhone" data-lang-key="form-phone">电话：</label>
+<input type="tel" id="formPhone" name="phone">
+</div>
+<div class="form-group">
+<label for="formInterest" data-lang-key="form-interest">艺术兴趣/联系：</label>
+<textarea id="formInterest" name="interest" rows="3"></textarea>
+</div>
+<button type="submit" class="btn btn-primary" data-lang-key="form-submit">提交</button>
+</form>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact">
+<div class="container">
+<h2 class="section-title" data-lang-key="contact-title">Kontak</h2>
+
+<div class="contact-content">
+<div class="contact-info">
+<!-- Indonesian Content -->
+<div class="content-id active">
+<div class="contact-item">
+<i class="fas fa-envelope"></i>
+<div>
+<h4 data-lang-key="contact-email-title">Email</h4>
+<p>info@yayasanmusikjakarta.org</p>
+</div>
+</div>
+<div class="contact-item">
+<i class="fas fa-globe"></i>
+<div>
+<h4 data-lang-key="contact-website-title">Website</h4>
+<p>www.yayasanmusikjakarta.org/performance-artist-management</p>
+</div>
+</div>
+</div>
+
+<!-- English Content -->
+<div class="content-en">
+<div class="contact-item">
+<i class="fas fa-envelope"></i>
+<div>
+<h4 data-lang-key="contact-email-title">Email</h4>
+<p>info@yayasanmusikjakarta.org</p>
+</div>
+</div>
+<div class="contact-item">
+<i class="fas fa-globe"></i>
+<div>
+<h4 data-lang-key="contact-website-title">Website</h4>
+<p>www.yayasanmusikjakarta.org/performance-artist-management</p>
+</div>
+</div>
+</div>
+
+<!-- Chinese Content -->
+<div class="content-zh">
+<div class="contact-item">
+<i class="fas fa-envelope"></i>
+<div>
+<h4 data-lang-key="contact-email-title">电子邮箱</h4>
+<p>info@yayasanmusikjakarta.org</p>
+</div>
+</div>
+<div class="contact-item">
+<i class="fas fa-globe"></i>
+<div>
+<h4 data-lang-key="contact-website-title">网站</h4>
+<p>www.yayasanmusikjakarta.org/performance-artist-management</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Footer -->
+<footer>
+<div class="container">
+<div class="social-links">
+<a href="#"><i class="fab fa-facebook-f"></i></a>
+<a href="#"><i class="fab fa-twitter"></i></a>
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-youtube"></i></a>
+<a href="#"><i class="fab fa-linkedin-in"></i></a>
+</div>
+
+<!-- Indonesian Content -->
+<div class="content-id active">
+<p>&copy; 2025 YMJ Stage. Semua hak dilindungi.</p>
+<p>Di bawah Yayasan Musik Jakarta</p>
+</div>
+
+<!-- English Content -->
+<div class="content-en">
+<p>&copy; 2025 YMJ Stage. All rights reserved.</p>
+<p>Under Yayasan Musik Jakarta</p>
+</div>
+
+<!-- Chinese Content -->
+<div class="content-zh">
+<p>&copy; 2025 YMJ Stage。保留所有权利。</p>
+<p>雅加达音乐基金会旗下</p>
+</div>
+</div>
+</footer>
+</div>
+
+<!-- Image Modal -->
+<div id="imageModal" class="image-modal">
+<span class="image-modal-close" onclick="closeImageModal()">&times;</span>
+<img class="image-modal-content" id="modalImage">
+</div>
+
+<!-- Event Detail Modal -->
+<div id="eventDetailModal" class="event-detail-modal">
+<div class="event-detail-content">
+<div class="event-detail-header">
+<h3 class="event-detail-title" id="eventDetailTitle">Event Title</h3>
+<button class="event-detail-close" onclick="closeEventDetailModal()">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<div class="event-detail-body">
+<img id="eventDetailImage" class="event-detail-image" src="" alt="Event Image" style="display:none;">
+<div id="eventDetailContent">
+<!-- Event detail content will be inserted here -->
+</div>
+</div>
+</div>
+</div>
+
+<!-- Artist Detail Modal -->
+<div id="artistDetailModal" class="artist-detail-modal">
+<div class="artist-detail-content">
+<div class="artist-detail-header">
+<h3 class="artist-detail-title" id="artistDetailTitle">Artist Detail</h3>
+<button class="artist-detail-close" onclick="closeArtistDetailModal()">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<div class="artist-detail-body">
+<img id="artistDetailImage" class="artist-detail-image" src="" alt="Artist Image" style="display:none;">
+<div id="artistDetailContent">
+<!-- Artist detail content will be inserted here -->
+</div>
+</div>
+</div>
+</div>
+
+<!-- Full Gallery Modal -->
+<div id="full-gallery-modal" class="full-gallery-modal">
+<div class="full-gallery-content">
+<div class="full-gallery-header">
+<h2 data-lang-key="gallery-full-title">Galeri Lengkap</h2>
+<button class="close-full-gallery" onclick="closeFullGallery()">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<div class="full-gallery-grid" id="full-gallery-grid">
+<!-- Gallery images will be displayed here -->
+</div>
+</div>
+</div>
+
+<script>
+// Multi-language translations
+const translations = {
+id: {
+'nav-home': 'Beranda',
+'nav-about': 'Tentang',
+'nav-events': 'Acara',
+'nav-artists': 'Artis',
+'nav-beethoven': 'Proyek',
+'nav-gallery': 'Media',
+'nav-community': 'Komunitas',
+'nav-contact': 'Kontak',
+'hero-title': 'YMJ Stage',
+'hero-subtitle': 'Mengkurasi Proyek Musik Klasik Berbasis Seniman di Panggung Internasional',
+'hero-description': 'Selamat datang di YMJ Stage — sebuah platform yang digerakkan oleh seniman untuk mendukung musisi, mengembangkan proyek bermakna, dan menghubungkan visi artistik dengan panggung dunia.',
+'hero-description-2': 'Kami tidak sekadar mengelola karier. Kami mendampingi perjalanan artistik, membangun kolaborasi jangka panjang, serta mengkurasi proyek yang berlandaskan integritas artistik, kesadaran historis, dan hubungan manusiawi.',
+'hero-description-3': 'Situs ini adalah ruang perjumpaan — untuk menjelajahi gagasan, mengenal inisiatif, dan membangun kemitraan lintas budaya.',
+'hero-description-4': 'Sebagai bagian dari Yayasan Musik Jakarta, YMJ berkomitmen pada keunggulan artistik serta dialog internasional antara Indonesia dan dunia.',
+'hero-motto': '“Bersama, kita memajukan seni. Bersama, kita mengangkat Indonesia.”',
+'hero-btn-events': 'Jelajahi Acara Kami',
+'hero-btn-community': 'Bergabung dengan Komunitas',
+'about-title': 'Tentang YMJ',
+'about-subtitle': 'Berbasis Seniman · Berlandaskan Relasi · Berorientasi Internasional',
+'about-description': 'YMJ STAGE merupakan divisi Performance & Artist Management yang hadir untuk mendampingi proyek musik klasik—diprakarsai oleh seniman, dibangun melalui relasi, dan ditumbuhkan dengan visi jangka panjang.',
+'about-motto': '“Musik sebagai panggilan, tumbuh lewat kepercayaan dan makna.”',
+'about-description-2': 'Karier artistik yang berkelanjutan tumbuh melalui kepercayaan, tujuan bersama, dan relasi yang bermakna.',
+'about-y-title': 'Di YMJ Stage',
+'about-y-1': 'Seniman menemukan arah,',
+'about-y-2': 'proyek menemukan pijakan,',
+'about-y-3': 'dan kolaborasi menjelma menjadi kemitraan yang setia menemani perjalanan.',
+'about-motto-2': '"Kami percaya musik adalah panggilan, bukan komoditas — dan karier tumbuh melalui kepercayaan, tujuan bersama, dan hubungan yang bermakna."',
+'about-here-title': 'Di sini,',
+'about-here-1': 'seniman menemukan arahan,',
+'about-here-2': 'proyek menemukan kejelasan,',
+'about-here-3': 'dan kolaborasi menjadi persahabatan.',
+'events-title': 'Acara Kami',
+'artists-title': 'Artis Kami',
+'beethoven-title': 'Proyek Unggulan',
+'gallery-title': 'Media',
+'community-title': 'Komunitas & Ajakan Bertindak',
+'contact-title': 'Kontak',
+'gallery-showing': 'Menampilkan',
+'gallery-of': 'dari',
+'gallery-photos': 'foto',
+'gallery-view-all': 'Lihat Semua Galeri',
+'gallery-full-title': 'Galeri Lengkap',
+'community-invitation': 'Undangan',
+'community-invitation-desc': 'Jika Anda seorang seniman, presenter, pendidik, pengelola, atau sahabat seni — kami menyambut Anda dengan hangat. Mari berbagi gagasan, menjalin keterhubungan, mencipta karya yang bermakna, dan membangun persahabatan melalui musik.',
+'community-motto': '"Bersama, mari kita memelihara talenta, merayakan seni, dan membawa musik ke tempat di mana ia paling dibutuhkan."',
+'community-indonesian-title': 'Bagi Seniman Indonesia',
+'community-indonesian-desc': 'Temukan peluang, perwakilan, masterclass, kompetisi, dan platform pertunjukan.',
+'community-international-title': 'Bagi Seniman Internasional',
+'community-international-desc': 'Berkolaborasi dengan kami — jelajahi bagaimana Anda dapat tampil, mengajar, berkolaborasi, atau tur di Indonesia.',
+'community-institutions-title': 'Bagi Institusi & Penyelenggara',
+'community-institutions-desc': 'Kami menyediakan kurasi, konsultasi, dukungan pemesanan, dan layanan pengembangan proyek.',
+'community-supporters-title': 'Bagi Teman & Pendukung',
+'community-supporters-desc': 'Tetap terhubung — bergabunglah dengan komunitas kami.',
+'community-form-title': 'Formulir Pendaftaran Singkat:',
+'form-name': 'Nama:',
+'form-email': 'Email:',
+'form-phone': 'No. Hp:',
+'form-interest': 'Minat/koneksi artistik:',
+'form-submit': 'Kirim',
+'contact-email-title': 'Email',
+'contact-website-title': 'Website',
+'beethoven-project-title': 'Beethoven Bicentennial Initiative (2027–2028)',
+'beethoven-subtitle': 'Inisiatif Unggulan YMJ Performance & Artist Management Division',
+'beethoven-organization': 'Di bawah Yayasan Musik Jakarta',
+'beethoven-overview': 'Gambaran Umum',
+'beethoven-overview-desc': 'Dalam rangka memperingati 200 tahun wafatnya Ludwig van Beethoven, YMJ menginisiasi proyek artistik jangka panjang yang berfokus pada karya Beethoven untuk biola dan piano.',
+'beethoven-artistic': 'Perspektif Artistik',
+'beethoven-artistic-desc': 'Karya Beethoven untuk biola dan piano menandai transformasi penting dalam sejarah musik kamar, dengan membangun relasi setara antara instrumen.',
+'beethoven-scope': 'Lingkup Inisiatif',
+'beethoven-scope-desc': 'Inti dari proyek ini adalah keterlibatan berkelanjutan dengan repertoar Beethoven untuk biola dan piano, yang dikembangkan melalui studi jangka panjang.',
+'beethoven-musicians': 'Para Musisi',
+'beethoven-musicians-desc': 'Beethoven Bicentennial Initiative dikembangkan dan dibawakan oleh Jap–Yeo Duo, kemitraan antara pemain biola Jap Tji Kien dan pianis Dr. Kuei Pin Yeo.',
+'beethoven-formats': 'Format Proyek',
+'beethoven-format-1': '• Resital Tunggal - Program kurasi yang menampilkan sonata utama',
+'beethoven-format-2': '• Seri Pendek (2-3 konser) - Menelusuri evolusi gaya Beethoven',
+'beethoven-format-3': '• Siklus Lengkap - Siklus sonata biola-piano lengkap',
+'beethoven-format-4': '• Format Diperluas - Resital kuliah, Masterclass, Residensi',
+'beethoven-inquire': 'Tanyakan Tentang Proyek Ini',
+'artist-japyeo-name': 'Jap–Yeo Duo',
+'artist-japyeo-role': 'Biola & Piano',
+'artist-japyeo-bio': 'Jap–Yeo Duo mempertemukan pemain biola Jap Tji Kien dan pianis Dr. Kuei Pin Yeo dalam kemitraan jangka panjang yang berfokus pada musik kamar dengan kedalaman dan kejernihan artistik.',
+'artist-kueipin-name': 'Dr. Kuei Pin Yeo',
+'artist-kueipin-role': 'Pianis',
+'artist-kueipin-bio': 'Dr. Kuei Pin Yeo adalah pianis Indonesia terkemuka dan doktor musik pertama Indonesia dalam bidang piano performance.',
+'artist-japtji-name': 'Jap Tji Kien',
+'artist-japtji-role': 'Violinis & Dirigen',
+'artist-japtji-bio': 'Jap Tji Kien adalah salah satu violinis dan dirigen paling dihormati di Indonesia, penerima FRSM pertama di Asia Tenggara.',
+'artist-bio': 'Biografi',
+'artist-repertoire': 'Repertoar',
+'artist-media': 'Media'
+},
+en: {
+'nav-home': 'Home',
+'nav-about': 'About',
+'nav-events': 'Events',
+'nav-artists': 'Artists',
+'nav-beethoven': 'Projects',
+'nav-gallery': 'Media',
+'nav-community': 'Community',
+'nav-contact': 'Contact',
+'hero-title': 'YMJ Stage',
+'hero-subtitle': 'Curating Artist-Led Classical Music Projects Worldwide',
+'hero-description': 'Welcome to YMJ Stage — an artist-driven platform where musicians are supported, guided, and connected from Indonesia to the world.',
+'hero-description-2': 'We do not simply manage careers. We accompany artistic journeys, develop meaningful projects, and build bridges between creative vision and global stages.',
+'hero-description-3': 'This site is a meeting place — to explore ideas, get to know initiatives, and build cross-cultural partnerships.',
+'hero-description-4': 'As part of Yayasan Musik Jakarta, YMJ is committed to artistic excellence and international dialogue between Indonesia and the world.',
+'hero-motto': 'Together, we advance artistry. Together, we elevate Indonesia.',
+'hero-btn-events': 'Explore Our Events',
+'hero-btn-community': 'Join Our Community',
+'about-title': 'About YMJ',
+'about-subtitle': 'Artist-Led · Relationship-Based · Internationally-Oriented',
+'about-description': 'YMJ Performance & Artist Management Division was founded to support artist-initiated classical music projects developed with long-term vision.',
+'about-motto': 'We believe that music is a calling, not a commodity.',
+'about-description-2': 'Sustainable artistic careers grow through trust, shared purpose, and meaningful relationships.',
+'about-y-title': 'At YMJ:',
+'about-y-1': 'Artists receive guidance,',
+'about-y-2': 'Projects gain structure,',
+'about-y-3': 'And collaborations evolve into long-term partnerships.',
+'about-motto-2': 'We believe music is a calling, not a commodity — and careers grow through trust, shared purpose, and meaningful relationships.',
+'about-here-title': 'Here,',
+'about-here-1': 'artists find guidance,',
+'about-here-2': 'projects find clarity,',
+'about-here-3': 'and collaborations become friendships.',
+'events-title': 'Our Events',
+'artists-title': 'Our Artists',
+'beethoven-title': 'Featured Project',
+'gallery-title': 'Media',
+'community-title': 'Community & Call to Action',
+'contact-title': 'Contact Us',
+'gallery-showing': 'Showing',
+'gallery-of': 'of',
+'gallery-photos': 'photos',
+'gallery-view-all': 'View All Gallery',
+'gallery-full-title': 'Complete Gallery',
+'community-invitation': 'Invitation',
+'community-invitation-desc': 'If you are an artist, presenter, educator, manager, or friend of the arts — we welcome you warmly. Let\'s share ideas, build connections, create meaningful works, and build friendships through music.',
+'community-motto': 'Together, let\'s nurture talent, celebrate art, and bring music where it\'s needed most.',
+'community-indonesian-title': 'For Indonesian Artists',
+'community-indonesian-desc': 'Discover opportunities, representation, masterclasses, competitions, and performance platforms.',
+'community-international-title': 'For International Artists',
+'community-international-desc': 'Collaborate with us — explore how you can perform, teach, collaborate, or tour in Indonesia.',
+'community-institutions-title': 'For Institutions & Presenters',
+'community-institutions-desc': 'We provide curation, consultation, booking support, and project development services.',
+'community-supporters-title': 'For Friends & Supporters',
+'community-supporters-desc': 'Stay connected — join our community.',
+'community-form-title': 'Quick Registration Form:',
+'form-name': 'Name:',
+'form-email': 'Email:',
+'form-phone': 'Phone:',
+'form-interest': 'Artistic interest/connection:',
+'form-submit': 'Submit',
+'contact-email-title': 'Email',
+'contact-website-title': 'Website',
+'beethoven-project-title': 'Beethoven Bicentennial Initiative (2027–2028)',
+'beethoven-subtitle': 'Flagship Initiative of YMJ Performance & Artist Management Division',
+'beethoven-organization': 'Under Yayasan Musik Jakarta',
+'beethoven-overview': 'Overview',
+'beethoven-overview-desc': 'In commemoration of the 200th anniversary of Ludwig van Beethoven\'s death, YMJ initiates a long-term artistic project focusing on Beethoven\'s works for violin and piano.',
+'beethoven-artistic': 'Artistic Perspective',
+'beethoven-artistic-desc': 'Beethoven\'s works for violin and piano mark a significant transformation in chamber music history, establishing equal relationships between instruments.',
+'beethoven-scope': 'Initiative Scope',
+'beethoven-scope-desc': 'The core of this project is sustained engagement with Beethoven\'s violin and piano repertoire, developed through long-term study.',
+'beethoven-musicians': 'The Musicians',
+'beethoven-musicians-desc': 'The Beethoven Bicentennial Initiative is developed and performed by Jap–Yeo Duo, a partnership between violinist Jap Tji Kien and pianist Dr. Kuei Pin Yeo.',
+'beethoven-formats': 'Project Formats',
+'beethoven-format-1': '• Single Recital - Curated program featuring major sonatas',
+'beethoven-format-2': '• Short Series (2-3 concerts) - Tracing Beethoven\'s stylistic evolution',
+'beethoven-format-3': '• Complete Cycle - Complete violin-piano sonata cycle',
+'beethoven-format-4': '• Extended Format - Lecture recitals, Masterclasses, Residencies',
+'beethoven-inquire': 'Inquire About This Project',
+'artist-japyeo-name': 'Jap–Yeo Duo',
+'artist-japyeo-role': 'Violin & Piano',
+'artist-japyeo-bio': 'Jap–Yeo Duo brings together violinist Jap Tji Kien and pianist Dr. Kuei Pin Yeo in a long-term partnership focused on chamber music of depth and artistic clarity.',
+'artist-kueipin-name': 'Dr. Kuei Pin Yeo',
+'artist-kueipin-role': 'Pianist',
+'artist-kueipin-bio': 'Dr. Kuei Pin Yeo is a prominent Indonesian pianist and Indonesia\'s first doctor of music in piano performance.',
+'artist-japtji-name': 'Jap Tji Kien',
+'artist-japtji-role': 'Violinist & Conductor',
+'artist-japtji-bio': 'Jap Tji Kien is one of Indonesia\'s most respected violinists and conductors, the first FRSM recipient in Southeast Asia.',
+'artist-bio': 'Biography',
+'artist-repertoire': 'Repertoire',
+'artist-media': 'Media'
+},
+zh: {
+'nav-home': '首页',
+'nav-about': '关于',
+'nav-events': '活动',
+'nav-artists': '艺术家',
+'nav-beethoven': '项目',
+'nav-gallery': '媒体',
+'nav-community': '社区',
+'nav-contact': '联系',
+'hero-title': 'YMJ Stage',
+'hero-subtitle': '策划以艺术家为核心的国际古典音乐项目',
+'hero-description': '欢迎来到 YMJ Stage —— 一个以艺术家为本，致力于支持音乐家成长、发展深度项目，并将艺术愿景与国际舞台相连的平台。',
+'hero-description-2': '我们并非只从事演出或职业管理。我们陪伴艺术旅程，培育长期合作关系。',
+'hero-description-3': '这是一个相遇之地 —— 探索创意、了解倡议、建立跨文化伙伴关系。',
+'hero-description-4': '作为雅加达音乐基金会的一部分，YMJ 致力于在推动艺术卓越的同时，促进印度尼西亚与世界之间的艺术对话。',
+'hero-motto': '携手同行，我们推进艺术。携手同行，我们让印度尼西亚走向世界。',
+'hero-btn-events': '探索我们的活动',
+'hero-btn-community': '加入我们的社区',
+'about-title': '关于 YMJ',
+'about-subtitle': '以艺术家为本 · 以关系为基石 · 国际化导向',
+'about-description': 'YMJ 演出与艺术家管理部致力于支持由艺术家发起、以长远愿景发展的古典音乐项目。',
+'about-motto': '我们相信，音乐是一份使命，而非商品。',
+'about-description-2': '可持续的艺术生涯源于信任、共同愿景与有意义的关系。',
+'about-y-title': '在 YMJ：',
+'about-y-1': '艺术家获得指导，',
+'about-y-2': '项目获得结构，',
+'about-y-3': '合作发展为长期伙伴关系。',
+'about-motto-2': '我们相信，音乐是一份使命，而非商品——艺术生涯源于信任、共同愿景与有意义的关系。',
+'about-here-title': '在这里，',
+'about-here-1': '艺术家找到指导，',
+'about-here-2': '项目找到清晰，',
+'about-here-3': '合作成为友谊。',
+'events-title': '我们的活动',
+'artists-title': '我们的艺术家',
+'beethoven-title': '特色项目',
+'gallery-title': '媒体',
+'community-title': '社区与行动呼吁',
+'contact-title': '联系我们',
+'gallery-showing': '显示',
+'gallery-of': '共',
+'gallery-photos': '张照片',
+'gallery-view-all': '查看完整画廊',
+'gallery-full-title': '完整画廊',
+'community-invitation': '邀请',
+'community-invitation-desc': '如果您是艺术家、演出者、教育者、管理者或艺术朋友——我们热烈欢迎您。让我们分享创意，建立联系，创作有意义的作品，通过音乐建立友谊。',
+'community-motto': '携手同行，让我们培养才华，庆祝艺术，将音乐带到最需要的地方。',
+'community-indonesian-title': '印尼艺术家',
+'community-indonesian-desc': '发现机会、代表、大师班、比赛和演出平台。',
+'community-international-title': '国际艺术家',
+'community-international-desc': '与我们合作——探索您如何在印尼演出、教学、合作或巡演。',
+'community-institutions-title': '机构与主办方',
+'community-institutions-desc': '我们提供策划、咨询、预订支持和项目开发服务。',
+'community-supporters-title': '朋友与支持者',
+'community-supporters-desc': '保持联系——加入我们的社区。',
+'community-form-title': '快速注册表：',
+'form-name': '姓名：',
+'form-email': '邮箱：',
+'form-phone': '电话：',
+'form-interest': '艺术兴趣/联系：',
+'form-submit': '提交',
+'contact-email-title': '电子邮箱',
+'contact-website-title': '网站',
+'beethoven-project-title': '贝多芬二百周年倡议（2027–2028）',
+'beethoven-subtitle': 'YMJ 演出与艺术家管理部旗舰倡议',
+'beethoven-organization': '雅加达音乐基金会旗下',
+'beethoven-overview': '概述',
+'beethoven-overview-desc': '为纪念路德维希·范·贝多芬逝世二百周年，YMJ 发起一项长期艺术项目，专注于贝多芬的小提琴与钢琴作品。',
+'beethoven-artistic': '艺术视角',
+'beethoven-artistic-desc': '贝多芬的小提琴与钢琴作品标志着室内乐史上的重要转变，建立了乐器间的平等关系。',
+'beethoven-scope': '倡议范围',
+'beethoven-scope-desc': '本项目的核心是通过长期学习与发展，持续参与贝多芬的小提琴与钢琴曲目。',
+'beethoven-musicians': '音乐家',
+'beethoven-musicians-desc': '贝多芬二百周年倡议由 Jap–Yeo 二重奏开发并演出，这是小提琴家叶至坚与钢琴家杨圭斌博士的合作。',
+'beethoven-formats': '项目形式',
+'beethoven-format-1': '• 单场独奏会 - 精选主要奏鸣曲的节目',
+'beethoven-format-2': '• 短期系列（2-3 场） - 追溯贝多芬风格演变',
+'beethoven-format-3': '• 完整周期 - 完整的小提琴-钢琴奏鸣曲周期',
+'beethoven-format-4': '• 扩展形式 - 讲座独奏会、大师班、驻院项目',
+'beethoven-inquire': '咨询此项目',
+'artist-japyeo-name': 'Jap–Yeo 二重奏',
+'artist-japyeo-role': '小提琴与钢琴',
+'artist-japyeo-bio': 'Jap–Yeo 二重奏由小提琴家叶至坚与钢琴家杨圭斌博士组成，是一组以深度、清晰度与思想性见长的室内乐组合。',
+'artist-kueipin-name': '杨圭斌博士',
+'artist-kueipin-role': '钢琴家',
+'artist-kueipin-bio': '杨圭斌博士是印度尼西亚杰出的钢琴家，印度尼西亚首位钢琴演奏艺术音乐博士。',
+'artist-japtji-name': '叶至坚',
+'artist-japtji-role': '小提琴家兼指挥家',
+'artist-japtji-bio': '叶至坚是印度尼西亚最受尊敬的小提琴家与指挥家之一，东南亚首位获得英国皇家音乐学院院士奖（FRSM, London）的音乐家。',
+'artist-bio': '传记',
+'artist-repertoire': '曲目',
+'artist-media': '媒体'
+}
+};
+
+// Admin System - Enhanced Security
+const ADMIN_CREDENTIALS = {
+  username: 'ymjadmin',
+  password: 'Beethoven2027!'
+};
+
+let isLoggedIn = false;
+let loginAttempts = 0;
+const MAX_LOGIN_ATTEMPTS = 3;
+let isLocked = false;
+let lockTime = 0;
+let currentLang = 'id';
+
+// Image storage keys
+const IMAGE_KEYS = {
+logo: 'ymjLogo',
+background: 'ymjBackground',
+splashLogo: 'ymjSplashLogo',
+beethoven: 'ymjBeethoven',
+beethovenDetail: 'ymjBeethovenDetail',
+japYeo: 'ymjJapYeo',
+kueiPin: 'ymjKueiPin',
+japTji: 'ymjJapTji',
+gallery: 'ymjGallery'
+};
+
+// Content storage keys
+const CONTENT_KEYS = {
+heroDescription: 'ymjHeroDescription'
+};
+
+// Events storage key
+const EVENTS_KEY = 'ymjEvents';
+
+// Artist data
+const ARTIST_DATA = {
+japYeo: {
+name: {
+id: 'Jap–Yeo Duo',
+en: 'Jap–Yeo Duo',
+zh: 'Jap–Yeo 二重奏'
+},
+role: {
+id: 'Biola & Piano',
+en: 'Violin & Piano',
+zh: '小提琴与钢琴'
+},
+bio: {
+id: `
+<p>Jap–Yeo Duo mempertemukan pemain biola Jap Tji Kien dan pianis Dr. Kuei Pin Yeo dalam kemitraan jangka panjang yang berfokus pada musik kamar dengan kedalaman dan kejernihan artistik. Repertoar mereka berpusat pada literatur utama biola–piano, dengan perhatian khusus pada karya Beethoven dan tradisi Klasik–Romantik.</p>
+<p>Kemitraan ini dibangun atas pertukaran artistik jangka panjang, dengan karya Beethoven sebagai pilar utama eksplorasi musik kamar mereka. Mereka telah tampil bersama di berbagai panggung konser di Indonesia dan internasional, menerima pujian atas interpretasi yang matang dan dialog musikal yang mendalam.</p>
+`,
+en: `
+<p>Jap–Yeo Duo brings together violinist Jap Tji Kien and pianist Dr. Kuei Pin Yeo in a long-term partnership focused on chamber music of depth and artistic clarity. Their repertoire centers on the core violin-piano literature, with special attention to Beethoven and the Classical-Romantic tradition.</p>
+<p>This partnership is built on long-term artistic exchange, with Beethoven's works as a central pillar of their chamber music exploration. They have performed together on various concert stages in Indonesia and internationally, receiving acclaim for their mature interpretations and deep musical dialogue.</p>
+`,
+zh: `
+<p>Jap–Yeo 二重奏由小提琴家叶至坚与钢琴家杨圭斌博士组成，是一组以深度、清晰度与思想性见长的室内乐组合。他们的曲目以小提琴-钢琴核心文献为中心，特别关注贝多芬及古典-浪漫主义传统。</p>
+<p>这一合作建立在长期艺术交流的基础上，以贝多芬的作品为其室内乐探索的核心支柱。他们在印度尼西亚及国际各音乐会舞台上演出，因其成熟的诠释和深刻的音乐对话而备受赞誉。</p>
+`
+},
+repertoire: {
+id: `
+<ul class="repertoire-list">
+<li>Ludwig van Beethoven - Sonata untuk Biola dan Piano No. 1-10</li>
+<li>Wolfgang Amadeus Mozart - Sonata untuk Biola dan Piano K. 301, K. 304, K. 378, K. 454</li>
+<li>Johannes Brahms - Sonata untuk Biola dan Piano No. 1-3</li>
+<li>César Franck - Sonata untuk Biola dan Piano dalam A Mayor</li>
+<li>Claude Debussy - Sonata untuk Biola dan Piano</li>
+<li>Maurice Ravel - Sonata untuk Biola dan Piano No. 2</li>
+</ul>
+`,
+en: `
+<ul class="repertoire-list">
+<li>Ludwig van Beethoven - Violin and Piano Sonatas No. 1-10</li>
+<li>Wolfgang Amadeus Mozart - Violin and Piano Sonatas K. 301, K. 304, K. 378, K. 454</li>
+<li>Johannes Brahms - Violin and Piano Sonatas No. 1-3</li>
+<li>César Franck - Violin and Piano Sonata in A Major</li>
+<li>Claude Debussy - Violin and Piano Sonata</li>
+<li>Maurice Ravel - Violin and Piano Sonata No. 2</li>
+</ul>
+`,
+zh: `
+<ul class="repertoire-list">
+<li>路德维希·范·贝多芬 - 小提琴与钢琴奏鸣曲第1-10号</li>
+<li>沃尔夫冈·阿马德乌斯·莫扎特 - 小提琴与钢琴奏鸣曲 K. 301, K. 304, K. 378, K. 454</li>
+<li>约翰内斯·勃拉姆斯 - 小提琴与钢琴奏鸣曲第1-3号</li>
+<li>塞萨尔·弗朗克 - A大调小提琴与钢琴奏鸣曲</li>
+<li>克劳德·德彪西 - 小提琴与钢琴奏鸣曲</li>
+<li>莫里斯·拉威尔 - 小提琴与钢琴奏鸣曲第2号</li>
+</ul>
+`
+},
+media: {
+id: `
+<div class="media-grid">
+<div class="media-item">
+<img src="https://picsum.photos/seed/japyeo1/400/300.jpg" alt="Jap-Yeo Duo Performance">
+<div class="media-overlay">Konser di Jakarta, 2023</div>
+</div>
+<div class="media-item">
+<img src="https://picsum.photos/seed/japyeo2/400/300.jpg" alt="Jap-Yeo Duo Rehearsal">
+<div class="media-overlay">Sesi Latihan</div>
+</div>
+<div class="media-item">
+<img src="https://picsum.photos/seed/japyeo3/400/300.jpg" alt="Jap-Yeo Duo Masterclass">
+<div class="media-overlay">Masterclass di Konservatori</div>
+</div>
+</div>
+<p>Video pertunjukan dan rekaman audio tersedia melalui saluran resmi Yayasan Musik Jakarta.</p>
+`,
+en: `
+<div class="media-grid">
+<div class="media-item">
+<img src="https://picsum.photos/seed/japyeo1/400/300.jpg" alt="Jap-Yeo Duo Performance">
+<div class="media-overlay">Concert in Jakarta, 2023</div>
+</div>
+<div class="media-item">
+<img src="https://picsum.photos/seed/japyeo2/400/300.jpg" alt="Jap-Yeo Duo Rehearsal">
+<div class="media-overlay">Rehearsal Session</div>
+</div>
+<div class="media-item">
+<img src="https://picsum.photos/seed/japyeo3/400/300.jpg" alt="Jap-Yeo Duo Masterclass">
+<div class="media-overlay">Masterclass at Conservatory</div>
+</div>
+</div>
+<p>Performance videos and audio recordings are available through Yayasan Musik Jakarta's official channels.</p>
+`,
+zh: `
+<div class="media-grid">
+<div class="media-item">
+<img src="https://picsum.photos/seed/japyeo1/400/300.jpg" alt="Jap-Yeo Duo Performance">
+<div class="media-overlay">2023年雅加达音乐会</div>
+</div>
+<div class="media-item">
+<img src="https://picsum.photos/seed/japyeo2/400/300.jpg" alt="Jap-Yeo Duo Rehearsal">
+<div class="media-overlay">排练课程</div>
+</div>
+<div class="media-item">
+<img src="https://picsum.photos/seed/japyeo3/400/300.jpg" alt="Jap-Yeo Duo Masterclass">
+<div class="media-overlay">音乐学院大师班</div>
+</div>
+</div>
+<p>演出视频和音频录音可通过雅加达音乐基金会官方频道获取。</p>
+`
+}
+},
+kueiPin: {
+name: {
+id: 'Dr. Kuei Pin Yeo',
+en: 'Dr. Kuei Pin Yeo',
+zh: '杨圭斌博士'
+},
+role: {
+id: 'Pianis',
+en: 'Pianist',
+zh: '钢琴家'
+},
+bio: {
+id: `
+<p>Dr. Kuei Pin Yeo adalah pianis Indonesia terkemuka dan doktor musik pertama Indonesia dalam bidang piano performance. Ia dikenal sebagai musisi dengan karier internasional yang panjang, tampil sebagai resitalis, solis dengan orkestra, serta musisi kamar di Amerika Serikat dan Asia.</p>
+<p>Debut resitalnya di Carnegie Recital Hall, New York, menandai awal pengakuan internasionalnya. The New York Times memuji permainannya sebagai pianis dengan teknik yang matang dan musikalitas yang peka.</p>
+`,
+en: `
+<p>Dr. Kuei Pin Yeo is a prominent Indonesian pianist and Indonesia's first doctor of music in piano performance. She is known as a musician with a long international career, performing as a recitalist, soloist with orchestras, and chamber musician in the United States and Asia.</p>
+<p>Her recital debut at Carnegie Recital Hall, New York, marked the beginning of her international recognition. The New York Times praised her playing as that of a pianist with mature technique and sensitive musicality.</p>
+`,
+zh: `
+<p>杨圭斌博士是印度尼西亚杰出的钢琴家，印度尼西亚首位钢琴演奏艺术音乐博士。她以在美国和亚洲作为独奏家、管弦乐队独奏家及室内乐音乐家的长期国际职业生涯而闻名。</p>
+<p>她在纽约卡内基独奏音乐厅的独奏首演标志着她国际认可的开始。《纽约时报》称赞她的演奏是一位技术成熟、音乐感敏锐的钢琴家。</p>
+`
+},
+repertoire: {
+id: `
+<ul class="repertoire-list">
+<li>Ludwig van Beethoven - Piano Concerto No. 1-5</li>
+<li>Frédéric Chopin - Etudes, Ballades, Scherzos, Polonaises</li>
+<li>Johannes Brahms - Piano Concerto No. 1-2</li>
+<li>Sergei Rachmaninoff - Piano Concerto No. 2-3</li>
+<li>Maurice Ravel - Piano Concerto in G Major</li>
+<li>Béla Bartók - Piano Concerto No. 1-3</li>
+</ul>
+`,
+en: `
+<ul class="repertoire-list">
+<li>Ludwig van Beethoven - Piano Concertos No. 1-5</li>
+<li>Frédéric Chopin - Etudes, Ballades, Scherzos, Polonaises</li>
+<li>Johannes Brahms - Piano Concertos No. 1-2</li>
+<li>Sergei Rachmaninoff - Piano Concertos No. 2-3</li>
+<li>Maurice Ravel - Piano Concerto in G Major</li>
+<li>Béla Bartók - Piano Concertos No. 1-3</li>
+</ul>
+`,
+zh: `
+<ul class="repertoire-list">
+<li>路德维希·范·贝多芬 - 第1-5号钢琴协奏曲</li>
+<li>弗雷德里克·肖邦 - 练习曲、叙事曲、谐谑曲、波兰舞曲</li>
+<li>约翰内斯·勃拉姆斯 - 第1-2号钢琴协奏曲</li>
+<li>谢尔盖·拉赫玛尼诺夫 - 第2-3号钢琴协奏曲</li>
+<li>莫里斯·拉威尔 - G大调钢琴协奏曲</li>
+<li>贝拉·巴托克 - 第1-3号钢琴协奏曲</li>
+</ul>
+`
+},
+media: {
+id: `
+<div class="media-grid">
+<div class="media-item">
+<img src="https://picsum.photos/seed/kueipin1/400/300.jpg" alt="Dr. Kuei Pin Yeo Performance">
+<div class="media-overlay">Resital di Carnegie Hall</div>
+</div>
+<div class="media-item">
+<img src="https://picsum.photos/seed/kueipin2/400/300.jpg" alt="Dr. Kuei Pin Yeo Teaching">
+<div class="media-overlay">Sesi Masterclass</div>
+</div>
+<div class="media-item">
+<img src="https://picsum.photos/seed/kueipin3/400/300.jpg" alt="Dr. Kuei Pin Yeo Award">
+<div class="media-overlay">Penerimaan Penghargaan</div>
+</div>
+</div>
+`,
+en: `
+<div class="media-grid">
+<div class="media-item">
+<img src="https://picsum.photos/seed/kueipin1/400/300.jpg" alt="Dr. Kuei Pin Yeo Performance">
+<div class="media-overlay">Recital at Carnegie Hall</div>
+</div>
+<div class="media-item">
+<img src="https://picsum.photos/seed/kueipin2/400/300.jpg" alt="Dr. Kuei Pin Yeo Teaching">
+<div class="media-overlay">Masterclass Session</div>
+</div>
+<div class="media-item">
+<img src="https://picsum.photos/seed/kueipin3/400/300.jpg" alt="Dr. Kuei Pin Yeo Award">
+<div class="media-overlay">Award Reception</div>
+</div>
+</div>
+`,
+zh: `
+<div class="media-grid">
+<div class="media-item">
+<img src="https://picsum.photos/seed/kueipin1/400/300.jpg" alt="Dr. Kuei Pin Yeo Performance">
+<div class="media-overlay">卡内基音乐厅独奏会</div>
+</div>
+<div class="media-item">
+<img src="https://picsum.photos/seed/kueipin2/400/300.jpg" alt="Dr. Kuei Pin Yeo Teaching">
+<div class="media-overlay">大师班课程</div>
+</div>
+<div class="media-item">
+<img src="https://picsum.photos/seed/kueipin3/400/300.jpg" alt="Dr. Kuei Pin Yeo Award">
+<div class="media-overlay">颁奖典礼</div>
+</div>
+</div>
+`
+}
+},
+japTji: {
+name: {
+id: 'Jap Tji Kien',
+en: 'Jap Tji Kien',
+zh: '叶至坚'
+},
+role: {
+id: 'Violinis & Dirigen',
+en: 'Violinist & Conductor',
+zh: '小提琴家兼指挥家'
+},
+bio: {
+id: `
+<p>Jap Tji Kien adalah salah satu violinis dan dirigen paling dihormati di Indonesia, lahir di Bandung, dan dikenal sebagai penerima Fellowship of the Royal Schools of Music (FRSM), London, pertama di Asia Tenggara.</p>
+<p>Sebagai violinis, Jap Tji Kien telah tampil luas sebagai solis dan musisi kamar, dengan kehadiran yang kuat di berbagai konser, siaran radio, dan televisi.</p>
+`,
+en: `
+<p>Jap Tji Kien is one of Indonesia's most respected violinists and conductors, born in Bandung, and known as the first recipient of the Fellowship of the Royal Schools of Music (FRSM), London, in Southeast Asia.</p>
+<p>As a violinist, Jap Tji Kien has performed extensively as a soloist and chamber musician, with a strong presence in various concerts, radio broadcasts, and television.</p>
+`,
+zh: `
+<p>叶至坚是印度尼西亚最受尊敬的小提琴家与指挥家之一，出生于万隆，是东南亚首位获得伦敦皇家音乐学院院士奖（FRSM, London）的音乐家。</p>
+<p>作为小提琴家，叶至坚广泛作为独奏家和室内乐音乐家演出，在各种音乐会、广播和电视中都有强有力的存在。</p>
+`
+},
+repertoire: {
+id: `
+<ul class="repertoire-list">
+<li>Johann Sebastian Bach - Partita dan Sonata untuk Biola Solo</li>
+<li>Wolfgang Amadeus Mozart - Concerto untuk Biola No. 3-5</li>
+<li>Ludwig van Beethoven - Concerto untuk Biola</li>
+<li>Felix Mendelssohn - Concerto untuk Biola dalam E Minor</li>
+<li>Piotr Ilyich Tchaikovsky - Concerto untuk Biola dalam D Mayor</li>
+<li>Jean Sibelius - Concerto untuk Biola dalam D Minor</li>
+</ul>
+`,
+en: `
+<ul class="repertoire-list">
+<li>Johann Sebastian Bach - Partitas and Sonatas for Solo Violin</li>
+<li>Wolfgang Amadeus Mozart - Violin Concertos No. 3-5</li>
+<li>Ludwig van Beethoven - Violin Concerto</li>
+<li>Felix Mendelssohn - Violin Concerto in E Minor</li>
+<li>Piotr Ilyich Tchaikovsky - Violin Concerto in D Major</li>
+<li>Jean Sibelius - Violin Concerto in D Minor</li>
+</ul>
+`,
+zh: `
+<ul class="repertoire-list">
+<li>约翰·塞巴斯蒂安·巴赫 - 小提琴独奏组曲与奏鸣曲</li>
+<li>沃尔夫冈·阿马德乌斯·莫扎特 - 第3-5号小提琴协奏曲</li>
+<li>路德维希·范·贝多芬 - 小提琴协奏曲</li>
+<li>费利克斯·门德尔松 - E小调小提琴协奏曲</li>
+<li>彼得·伊里奇·柴可夫斯基 - D大调小提琴协奏曲</li>
+<li>让·西贝柳斯 - D小调小提琴协奏曲</li>
+</ul>
+`
+},
+media: {
+id: `
+<div class="media-grid">
+<div class="media-item">
+<img src="https://picsum.photos/seed/japtji1/400/300.jpg" alt="Jap Tji Kien Conducting">
+<div class="media-overlay">Mendampingi Orkes Simfoni Nasional Indonesia</div>
+</div>
+<div class="media-item">
+<img src="https://picsum.photos/seed/japtji2/400/300.jpg" alt="Jap Tji Kien Violin Performance">
+<div class="media-overlay">Resital Biola Solo</div>
+</div>
+<div class="media-item">
+<img src="https://picsum.photos/seed/japtji3/400/300.jpg" alt="Jap Tji Kien Teaching">
+<div class="media-overlay">Sesi Masterclass</div>
+</div>
+</div>
+`,
+en: `
+<div class="media-grid">
+<div class="media-item">
+<img src="https://picsum.photos/seed/japtji1/400/300.jpg" alt="Jap Tji Kien Conducting">
+<div class="media-overlay">Conducting Indonesian National Symphony Orchestra</div>
+</div>
+<div class="media-item">
+<img src="https://picsum.photos/seed/japtji2/400/300.jpg" alt="Jap Tji Kien Violin Performance">
+<div class="media-overlay">Violin Solo Recital</div>
+</div>
+<div class="media-item">
+<img src="https://picsum.photos/seed/japtji3/400/300.jpg" alt="Jap Tji Kien Teaching">
+<div class="media-overlay">Masterclass Session</div>
+</div>
+</div>
+`,
+zh: `
+<div class="media-grid">
+<div class="media-item">
+<img src="https://picsum.photos/seed/japtji1/400/300.jpg" alt="Jap Tji Kien Conducting">
+<div class="media-overlay">指挥印尼国家交响乐团</div>
+</div>
+<div class="media-item">
+<img src="https://picsum.photos/seed/japtji2/400/300.jpg" alt="Jap Tji Kien Violin Performance">
+<div class="media-overlay">小提琴独奏会</div>
+</div>
+<div class="media-item">
+<img src="https://picsum.photos/seed/japtji3/400/300.jpg" alt="Jap Tji Kien Teaching">
+<div class="media-overlay">大师班课程</div>
+</div>
+</div>
+`
+}
+}
+};
+
+// Default events data
+const DEFAULT_EVENTS = {
+2024: [
+{
+id: 'evt202401',
+date: 'Februari 8-12, 2024',
+title: {
+id: 'Beyond the Notes',
+en: 'Beyond the Notes',
+zh: 'Beyond the Notes'
+},
+location: {
+id: 'Jakarta, Indonesia',
+en: 'Jakarta, Indonesia',
+zh: 'Jakarta, Indonesia'
+},
+description: {
+id: 'Perayaan ulang tahun ke-40 YMJ di JIExpo dengan pertunjukan inovatif.',
+en: 'YMJ\'s 40th anniversary celebration at JIExpo featuring innovative performances.',
+zh: 'YMJ\'s 40th anniversary celebration at JIExpo featuring innovative performances.'
+},
+detail: {
+id: 'Beyond the Notes adalah acara khusus yang merayakan ulang tahun ke-40 Yayasan Musik Jakarta.',
+en: 'Beyond the Notes is a special event celebrating the 40th anniversary of Yayasan Musik Jakarta.',
+zh: 'Beyond the Notes is a special event celebrating the 40th anniversary of Yayasan Musik Jakarta.'
+}
+},
+{
+id: 'evt202402',
+date: 'Mei 20-25, 2024',
+title: {
+id: 'Indonesia Open Competition (IOC)',
+en: 'Indonesia Open Competition (IOC)',
+zh: 'Indonesia Open Competition (IOC)'
+},
+location: {
+id: 'Hong Kong',
+en: 'Hong Kong',
+zh: 'Hong Kong'
+},
+description: {
+id: 'Kompetisi tahunan yang menampilkan talenta musik terbaik Indonesia di panggung internasional.',
+en: 'Annual competition showcasing Indonesia\'s finest musical talents on the international stage.',
+zh: 'Annual competition showcasing Indonesia\'s finest musical talents on the international stage.'
+},
+detail: {
+id: 'Indonesia Open Competition (IOC) adalah acara tahunan yang menampilkan talenta musik terbaik Indonesia.',
+en: 'The Indonesia Open Competition (IOC) is an annual event that showcases Indonesia\'s finest musical talents.',
+zh: 'The Indonesia Open Competition (IOC) is an annual event that showcases Indonesia\'s finest musical talents.'
+}
+},
+{
+id: 'evt202403',
+date: 'Agustus 3-8, 2024',
+title: {
+id: 'Konferensi Pendidik Musik',
+en: 'Music Educators Conference',
+zh: 'Music Educators Conference'
+},
+location: {
+id: 'Singapura',
+en: 'Singapore',
+zh: 'Singapore'
+},
+description: {
+id: 'Konferensi yang mengumpulkan pendidik musik dari seluruh Asia Tenggara.',
+en: 'Conference bringing together music educators from across Southeast Asia.',
+zh: 'Conference bringing together music educators from across Southeast Asia.'
+},
+detail: {
+id: 'Konferensi Pendidik Musik adalah pertemuan tahunan yang mengumpulkan pendidik musik.',
+en: 'The Music Educators Conference is an annual meeting that brings together music educators.',
+zh: 'The Music Educators Conference is an annual meeting that brings together music educators.'
+}
+}
+],
+2025: [
+{
+id: 'evt202501',
+date: 'Januari 15-20, 2025',
+title: {
+id: 'New York Audition Franz Liszt Piano Competition',
+en: 'New York Audition Franz Liszt Piano Competition',
+zh: 'New York Audition Franz Liszt Piano Competition'
+},
+location: {
+id: 'New York, USA',
+en: 'New York, USA',
+zh: 'New York, USA'
+},
+description: {
+id: 'Kompetisi piano internasional yang menampilkan pianis muda berbakat dari seluruh dunia.',
+en: 'International piano competition featuring talented young pianists from around the world.',
+zh: 'International piano competition featuring talented young pianists from around the world.'
+},
+detail: {
+id: 'New York Audition Franz Liszt Piano Competition adalah acara internasional bergengsi.',
+en: 'The New York Audition Franz Liszt Piano Competition is a prestigious international event.',
+zh: 'The New York Audition Franz Liszt Piano Competition is a prestigious international event.'
+}
+},
+{
+id: 'evt202502',
+date: 'Maret 10-15, 2025',
+title: {
+id: 'Indonesia Open Competition (IOC)',
+en: 'Indonesia Open Competition (IOC)',
+zh: 'Indonesia Open Competition (IOC)'
+},
+location: {
+id: 'Hong Kong',
+en: 'Hong Kong',
+zh: 'Hong Kong'
+},
+description: {
+id: 'Kompetisi tahunan yang menampilkan talenta musik terbaik Indonesia.',
+en: 'Annual competition showcasing Indonesia\'s finest musical talents.',
+zh: 'Annual competition showcasing Indonesia\'s finest musical talents.'
+},
+detail: {
+id: 'Indonesia Open Competition (IOC) melanjutkan tradisi menampilkan talenta musik terbaik Indonesia.',
+en: 'The Indonesia Open Competition (IOC) continues its tradition of showcasing Indonesia\'s finest musical talents.',
+zh: 'The Indonesia Open Competition (IOC) continues its tradition of showcasing Indonesia\'s finest musical talents.'
+}
+},
+{
+id: 'evt202503',
+date: 'Juni 5-10, 2025',
+title: {
+id: 'Asian Young Artists Showcase',
+en: 'Asian Young Artists Showcase',
+zh: 'Asian Young Artists Showcase'
+},
+location: {
+id: 'Tokyo, Jepang',
+en: 'Tokyo, Japan',
+zh: 'Tokyo, Japan'
+},
+description: {
+id: 'Acara yang menampilkan musisi klasik muda paling menjanjikan dari seluruh Asia.',
+en: 'Event featuring the most promising young classical musicians from across Asia.',
+zh: 'Event featuring the most promising young classical musicians from across Asia.'
+},
+detail: {
+id: 'Asian Young Artists Showcase adalah acara tahunan yang menonjolkan musisi klasik muda Asia.',
+en: 'The Asian Young Artists Showcase is an annual event that highlights Asia\'s most promising young classical musicians.',
+zh: 'The Asian Young Artists Showcase is an annual event that highlights Asia\'s most promising young classical musicians.'
+}
+}
+],
+2026: [
+{
+id: 'evt202601',
+date: 'September 12-18, 2026',
+title: {
+id: 'Seri Konser Peringatan Dua Abad Wafatnya Beethoven',
+en: 'Beethoven Bicentennial Memorial Concert Series',
+zh: 'Beethoven Bicentennial Memorial Concert Series'
+},
+location: {
+id: 'Berbagai Tempat',
+en: 'Multiple Venues',
+zh: 'Multiple Venues'
+},
+description: {
+id: 'Siklus pertunjukan global memperingati 200 tahun wafatnya Beethoven.',
+en: 'A global performance cycle commemorating the 200th anniversary of Beethoven\'s death.',
+zh: 'A global performance cycle commemorating the 200th anniversary of Beethoven\'s death.'
+},
+detail: {
+id: 'Seri Konser Peringatan Dua Abad Wafatnya Beethoven adalah siklus pertunjukan global.',
+en: 'The Beethoven Bicentennial Memorial Concert Series is a global performance cycle.',
+zh: 'The Beethoven Bicentennial Memorial Concert Series is a global performance cycle.'
+}
+},
+{
+id: 'evt202602',
+date: 'TBD',
+title: {
+id: 'Program Pertukaran Artis Internasional',
+en: 'International Artist Exchange Program',
+zh: 'International Artist Exchange Program'
+},
+location: {
+id: 'Indonesia & Eropa',
+en: 'Indonesia & Europe',
+zh: 'Indonesia & Europe'
+},
+description: {
+id: 'Program pertukaran budaya yang menghubungkan musisi Indonesia dengan artis internasional.',
+en: 'Cultural exchange program connecting Indonesian musicians with international artists.',
+zh: 'Cultural exchange program connecting Indonesian musicians with international artists.'
+},
+detail: {
+id: 'Program Pertukaran Artis Internasional adalah inisiatif budaya yang dirancang untuk menghubungkan.',
+en: 'The International Artist Exchange Program is a cultural initiative designed to connect.',
+zh: 'The International Artist Exchange Program is a cultural initiative designed to connect.'
+}
+},
+{
+id: 'evt202603',
+date: 'TBD',
+title: {
+id: 'Festival Musik Klasik Asia Tenggara',
+en: 'Southeast Asian Classical Music Festival',
+zh: 'Southeast Asian Classical Music Festival'
+},
+location: {
+id: 'Jakarta, Indonesia',
+en: 'Jakarta, Indonesia',
+zh: 'Jakarta, Indonesia'
+},
+description: {
+id: 'Festival yang menampilkan musisi klasik terbaik dari seluruh Asia Tenggara.',
+en: 'Festival featuring the finest classical musicians from across Southeast Asia.',
+zh: 'Festival featuring the finest classical musicians from across Southeast Asia.'
+},
+detail: {
+id: 'Festival Musik Klasik Asia Tenggara akan mengumpulkan musisi klasik terbaik.',
+en: 'The Southeast Asian Classical Music Festival will bring together the finest classical musicians.',
+zh: 'The Southeast Asian Classical Music Festival will bring together the finest classical musicians.'
+}
+}
+]
+};
+
+// Check if already logged in
+function checkAdminStatus() {
+const adminStatus = localStorage.getItem('ymjAdminLoggedIn');
+const loginTime = localStorage.getItem('ymjLoginTime');
+  
+if (adminStatus === 'true' && loginTime) {
+  const now = Date.now();
+  const loginTimestamp = parseInt(loginTime);
+  const hoursSinceLogin = (now - loginTimestamp) / (1000 * 60 * 60);
+    
+  if (hoursSinceLogin < 24) {
+    isLoggedIn = true;
+    document.getElementById('adminToggle').classList.add('logged-in');
+  } else {
+    localStorage.removeItem('ymjAdminLoggedIn');
+    localStorage.removeItem('ymjLoginTime');
+  }
+}
+  
+  const lockedUntil = localStorage.getItem('ymjLockedUntil');
+  if (lockedUntil) {
+    const now = Date.now();
+    const lockTimestamp = parseInt(lockedUntil);
+    if (now < lockTimestamp) {
+      isLocked = true;
+      lockTime = lockTimestamp;
+      updateLoginAttempts();
+    } else {
+      localStorage.removeItem('ymjLockedUntil');
+    }
+  }
+}
+
+// Handle admin click
+function handleAdminClick() {
+if (isLoggedIn) {
+toggleAdminDashboard();
+} else {
+if (isLocked) {
+  const remainingTime = Math.ceil((lockTime - Date.now()) / (1000 * 60));
+  alert(`Account locked. Please try again in ${remainingTime} minutes.`);
+  return;
+}
+showAdminLogin();
+}
+}
+
+// Show admin login modal
+function showAdminLogin() {
+document.getElementById('adminLogin').classList.add('active');
+updateLoginAttempts();
+}
+
+// Close admin login modal
+function closeAdminLogin() {
+document.getElementById('adminLogin').classList.remove('active');
+document.getElementById('loginError').style.display = 'none';
+document.getElementById('adminUsername').value = '';
+document.getElementById('adminPassword').value = '';
+}
+
+// Update login attempts display
+function updateLoginAttempts() {
+const attemptsElement = document.getElementById('loginAttempts');
+if (isLocked) {
+  const remainingTime = Math.ceil((lockTime - Date.now()) / (1000 * 60));
+  attemptsElement.textContent = `Account locked. Try again in ${remainingTime} minutes`;
+  attemptsElement.style.color = 'var(--error)';
+} else {
+  const remaining = MAX_LOGIN_ATTEMPTS - loginAttempts;
+  attemptsElement.textContent = `Attempts remaining: ${remaining}`;
+  attemptsElement.style.color = 'var(--text-light)';
+}
+}
+
+// Toggle admin dashboard
+function toggleAdminDashboard() {
+const dashboard = document.getElementById('adminDashboard');
+dashboard.classList.toggle('active');
+
+if (dashboard.classList.contains('active')) {
+loadAllImages();
+loadAllContent();
+loadEvents();
+updateFirebaseStatus();
+}
+}
+
+// Update Firebase status
+function updateFirebaseStatus() {
+const statusElement = document.getElementById('firebaseStatus');
+const storageInfoElement = document.getElementById('storageInfo');
+  
+statusElement.textContent = 'Using Local Storage';
+statusElement.className = 'firebase-status disconnected';
+storageInfoElement.textContent = 'Images are stored in your browser\'s local storage. They will only be visible to you on this device and browser.';
+}
+
+// Admin logout
+function adminLogout() {
+isLoggedIn = false;
+localStorage.setItem('ymjAdminLoggedIn', 'false');
+localStorage.removeItem('ymjLoginTime');
+document.getElementById('adminDashboard').classList.remove('active');
+document.getElementById('adminToggle').classList.remove('logged-in');
+showNotification('Logged out successfully');
+}
+
+// Save image to localStorage
+function saveImage(key, imageData) {
+localStorage.setItem(key, JSON.stringify(imageData));
+updateImageDisplay(key, imageData);
+}
+
+// Load image from localStorage
+function loadImage(key) {
+const data = localStorage.getItem(key);
+return data ? JSON.parse(data) : null;
+}
+
+// Update image display
+function updateImageDisplay(key, imageData) {
+switch(key) {
+case IMAGE_KEYS.logo:
+updateLogoDisplay(imageData);
+break;
+case IMAGE_KEYS.background:
+updateBackgroundDisplay(imageData);
+break;
+case IMAGE_KEYS.splashLogo:
+updateSplashLogoDisplay(imageData);
+break;
+case IMAGE_KEYS.beethoven:
+updateBeethovenDisplay(imageData);
+break;
+case IMAGE_KEYS.beethovenDetail:
+updateBeethovenDetailDisplay(imageData);
+break;
+case IMAGE_KEYS.japYeo:
+updateJapYeoDisplay(imageData);
+break;
+case IMAGE_KEYS.kueiPin:
+updateKueiPinDisplay(imageData);
+break;
+case IMAGE_KEYS.japTji:
+updateJapTjiDisplay(imageData);
+break;
+case IMAGE_KEYS.gallery:
+updateGalleryDisplay(imageData);
+break;
+default:
+console.error('Unknown image key:', key);
+}
+}
+
+// Save text content to localStorage
+function saveTextContent(contentId) {
+const content = document.getElementById(contentId).value;
+const key = CONTENT_KEYS[contentId];
+if (key) {
+localStorage.setItem(key, content);
+updateTextDisplay(contentId, content);
+showNotification('Content saved successfully!');
+}
+}
+
+// Load text content from localStorage
+function loadTextContent(contentId) {
+const key = CONTENT_KEYS[contentId];
+if (key) {
+const content = localStorage.getItem(key);
+if (content) {
+updateTextDisplay(contentId, content);
+return content;
+}
+}
+return document.getElementById(contentId).textContent;
+}
+
+// Update text display
+function updateTextDisplay(contentId, content) {
+const displayElement = document.getElementById(contentId);
+if (displayElement) {
+displayElement.textContent = content;
+}
+}
+
+// Load all text content
+function loadAllContent() {
+Object.keys(CONTENT_KEYS).forEach(key => {
+const content = loadTextContent(key);
+const inputElement = document.getElementById(key);
+if (inputElement && content) {
+inputElement.value = content;
+}
+});
+}
+
+// Event Management Functions
+function loadEvents() {
+const eventsData = localStorage.getItem(EVENTS_KEY);
+let events = eventsData ? JSON.parse(eventsData) : DEFAULT_EVENTS;
+  
+Object.keys(events).forEach(year => {
+if (!Array.isArray(events[year])) {
+events[year] = [];
+}
+});
+  
+displayEvents(events);
+updateEventList(events);
+}
+
+function saveEvents(events) {
+localStorage.setItem(EVENTS_KEY, JSON.stringify(events));
+  
+if (document.getElementById('adminDashboard').classList.contains('active')) {
+displayEvents(events);
+updateEventList(events);
+}
+}
+
+function displayEvents(events) {
+const eventsTimeline = document.getElementById('eventsTimeline');
+if (!eventsTimeline) return;
+  
+eventsTimeline.innerHTML = '';
+
+const sortedYears = Object.keys(events).sort((a, b) => b - a);
+
+if (sortedYears.length === 0) {
+const noEventsMessage = document.createElement('div');
+noEventsMessage.className = 'no-events-message';
+noEventsMessage.textContent = translations[currentLang]['no-events'] || 'No events scheduled at this time.';
+noEventsMessage.style.textAlign = 'center';
+noEventsMessage.style.padding = '3rem';
+noEventsMessage.style.color = 'var(--text-light)';
+noEventsMessage.style.fontSize = '1.2rem';
+eventsTimeline.appendChild(noEventsMessage);
+return;
+}
+
+sortedYears.forEach(year => {
+if (!events[year] || !Array.isArray(events[year])) {
+events[year] = [];
+}
+  
+if (events[year].length === 0) return;
+  
+const yearGroup = document.createElement('div');
+yearGroup.className = 'year-group';
+
+const yearHeader = document.createElement('div');
+yearHeader.className = 'year-header';
+
+const yearBadge = document.createElement('div');
+yearBadge.className = 'year-badge';
+yearBadge.textContent = year;
+
+const yearLine = document.createElement('div');
+yearLine.className = 'year-line';
+
+yearHeader.appendChild(yearBadge);
+yearHeader.appendChild(yearLine);
+
+const eventsGrid = document.createElement('div');
+eventsGrid.className = 'events-grid';
+
+events[year].forEach(event => {
+const eventCard = document.createElement('div');
+eventCard.className = 'event-card fade-in';
+
+const eventDate = document.createElement('div');
+eventDate.className = 'event-date';
+eventDate.textContent = event.date[currentLang] || event.date.id;
+
+const eventTitle = document.createElement('h3');
+eventTitle.className = 'event-title';
+eventTitle.textContent = event.title[currentLang] || event.title.id;
+
+const eventLocation = document.createElement('div');
+eventLocation.className = 'event-location';
+eventLocation.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${event.location[currentLang] || event.location.id}</span>`;
+
+const eventDescription = document.createElement('p');
+eventDescription.className = 'event-description';
+eventDescription.textContent = event.description[currentLang] || event.description.id;
+
+const eventLink = document.createElement('a');
+eventLink.className = 'event-link';
+eventLink.href = '#';
+eventLink.textContent = translations[currentLang]['event-learn-more'] || 'Learn More ';
+eventLink.innerHTML += '<i class="fas fa-arrow-right"></i>';
+eventLink.onclick = function(e) {
+e.preventDefault();
+showEventDetail(event);
+};
+
+eventCard.appendChild(eventDate);
+eventCard.appendChild(eventTitle);
+eventCard.appendChild(eventLocation);
+eventCard.appendChild(eventDescription);
+eventCard.appendChild(eventLink);
+
+eventsGrid.appendChild(eventCard);
+});
+
+yearGroup.appendChild(yearHeader);
+yearGroup.appendChild(eventsGrid);
+eventsTimeline.appendChild(yearGroup);
+});
+  
+const fadeElements = document.querySelectorAll('.fade-in');
+fadeElements.forEach(element => {
+element.classList.add('visible');
+});
+}
+
+function updateEventList(events) {
+const eventList = document.getElementById('eventList');
+if (!eventList) return;
+  
+eventList.innerHTML = '';
+
+const sortedYears = Object.keys(events).sort((a, b) => b - a);
+
+sortedYears.forEach(year => {
+if (!events[year] || !Array.isArray(events[year])) return;
+  
+events[year].forEach(event => {
+const eventItem = document.createElement('div');
+eventItem.className = 'event-item';
+
+const eventItemHeader = document.createElement('div');
+eventItemHeader.className = 'event-item-header';
+
+const eventItemTitle = document.createElement('div');
+eventItemTitle.className = 'event-item-title';
+eventItemTitle.textContent = `${event.title[currentLang] || event.title.id} (${year})`;
+
+const eventItemDate = document.createElement('div');
+eventItemDate.className = 'event-item-date';
+eventItemDate.textContent = event.date[currentLang] || event.date.id;
+
+const eventItemActions = document.createElement('div');
+eventItemActions.className = 'event-item-actions';
+
+const editButton = document.createElement('button');
+editButton.innerHTML = '<i class="fas fa-edit"></i>';
+editButton.onclick = function() {
+editEvent(year, event.id);
+};
+
+const deleteButton = document.createElement('button');
+deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
+deleteButton.onclick = function() {
+deleteEvent(year, event.id);
+};
+
+eventItemActions.appendChild(editButton);
+eventItemActions.appendChild(deleteButton);
+
+eventItemHeader.appendChild(eventItemTitle);
+eventItemHeader.appendChild(eventItemDate);
+eventItemHeader.appendChild(eventItemActions);
+
+eventItem.appendChild(eventItemHeader);
+eventList.appendChild(eventItem);
+});
+});
+}
+
+function showEventForm() {
+document.getElementById('eventForm').style.display = 'block';
+}
+
+function hideEventForm() {
+document.getElementById('eventForm').style.display = 'none';
+document.getElementById('eventYear').value = '2024';
+document.getElementById('eventDate').value = '';
+document.getElementById('eventTitle').value = '';
+document.getElementById('eventLocation').value = '';
+document.getElementById('eventDescription').value = '';
+document.getElementById('eventDetail').value = '';
+}
+
+function saveEvent() {
+const year = document.getElementById('eventYear').value;
+const date = document.getElementById('eventDate').value;
+const title = document.getElementById('eventTitle').value;
+const location = document.getElementById('eventLocation').value;
+const description = document.getElementById('eventDescription').value;
+const detail = document.getElementById('eventDetail').value;
+
+if (!title || !date || !location || !description) {
+alert('Please fill in all required fields');
+return;
+}
+
+const eventsData = localStorage.getItem(EVENTS_KEY);
+let events = eventsData ? JSON.parse(eventsData) : DEFAULT_EVENTS;
+
+const newEvent = {
+id: 'evt' + year + Math.random().toString(36).substr(2, 9),
+date: { id: date, en: date, zh: date },
+title: { id: title, en: title, zh: title },
+location: { id: location, en: location, zh: location },
+description: { id: description, en: description, zh: description },
+detail: { id: detail, en: detail, zh: detail }
+};
+
+if (!events[year]) {
+events[year] = [];
+}
+events[year].push(newEvent);
+
+events[year].sort((a, b) => {
+return a.date.id.localeCompare(b.date.id);
+});
+
+saveEvents(events);
+hideEventForm();
+showNotification('Event added successfully!');
+}
+
+function editEvent(year, eventId) {
+const eventsData = localStorage.getItem(EVENTS_KEY);
+let events = eventsData ? JSON.parse(eventsData) : DEFAULT_EVENTS;
+
+const event = events[year].find(e => e.id === eventId);
+if (!event) return;
+
+document.getElementById('eventYear').value = year;
+document.getElementById('eventDate').value = event.date.id;
+document.getElementById('eventTitle').value = event.title.id;
+document.getElementById('eventLocation').value = event.location.id;
+document.getElementById('eventDescription').value = event.description.id;
+document.getElementById('eventDetail').value = event.detail.id;
+
+showEventForm();
+
+const saveButton = document.querySelector('#eventForm .btn-save');
+saveButton.textContent = 'Update Event';
+saveButton.onclick = function() {
+updateEvent(year, eventId);
+};
+}
+
+function updateEvent(year, eventId) {
+const date = document.getElementById('eventDate').value;
+const title = document.getElementById('eventTitle').value;
+const location = document.getElementById('eventLocation').value;
+const description = document.getElementById('eventDescription').value;
+const detail = document.getElementById('eventDetail').value;
+
+if (!title || !date || !location || !description) {
+alert('Please fill in all required fields');
+return;
+}
+
+const eventsData = localStorage.getItem(EVENTS_KEY);
+let events = eventsData ? JSON.parse(eventsData) : DEFAULT_EVENTS;
+
+const eventIndex = events[year].findIndex(e => e.id === eventId);
+if (eventIndex !== -1) {
+events[year][eventIndex] = {
+id: eventId,
+date: { id: date, en: date, zh: date },
+title: { id: title, en: title, zh: title },
+location: { id: location, en: location, zh: location },
+description: { id: description, en: description, zh: description },
+detail: { id: detail, en: detail, zh: detail }
+};
+
+events[year].sort((a, b) => {
+return a.date.id.localeCompare(b.date.id);
+});
+
+saveEvents(events);
+hideEventForm();
+showNotification('Event updated successfully!');
+  
+const saveButton = document.querySelector('#eventForm .btn-save');
+saveButton.textContent = 'Save Event';
+saveButton.onclick = function() {
+saveEvent();
+};
+}
+}
+
+function deleteEvent(year, eventId) {
+if (!confirm('Are you sure you want to delete this event?')) return;
+
+const eventsData = localStorage.getItem(EVENTS_KEY);
+let events = eventsData ? JSON.parse(eventsData) : DEFAULT_EVENTS;
+
+events[year] = events[year].filter(e => e.id !== eventId);
+
+if (events[year].length === 0) {
+delete events[year];
+}
+
+saveEvents(events);
+showNotification('Event deleted successfully!');
+}
+
+function showEventDetail(event) {
+const modal = document.getElementById('eventDetailModal');
+const title = document.getElementById('eventDetailTitle');
+const content = document.getElementById('eventDetailContent');
+const image = document.getElementById('eventDetailImage');
+
+title.textContent = event.title[currentLang] || event.title.id;
+
+content.innerHTML = `
+<p><strong>${translations[currentLang]['event-date'] || 'Date'}:</strong> ${event.date[currentLang] || event.date.id}</p>
+<p><strong>${translations[currentLang]['event-location'] || 'Location'}:</strong> ${event.location[currentLang] || event.location.id}</p>
+<p><strong>${translations[currentLang]['event-description'] || 'Description'}:</strong> ${event.description[currentLang] || event.description.id}</p>
+<p><strong>${translations[currentLang]['event-detail'] || 'Details'}:</strong> ${event.detail[currentLang] || event.detail.id}</p>
+`;
+
+image.style.display = 'none';
+modal.style.display = 'block';
+}
+
+function closeEventDetailModal() {
+document.getElementById('eventDetailModal').style.display = 'none';
+}
+
+// Artist Detail Modal Functions
+function showArtistDetail(artistId, section) {
+const modal = document.getElementById('artistDetailModal');
+const title = document.getElementById('artistDetailTitle');
+const content = document.getElementById('artistDetailContent');
+const image = document.getElementById('artistDetailImage');
+  
+const artist = ARTIST_DATA[artistId];
+if (!artist) return;
+  
+let sectionTitle = '';
+switch(section) {
+case 'bio':
+sectionTitle = translations[currentLang]['artist-bio'] || 'Biography';
+break;
+case 'repertoire':
+sectionTitle = translations[currentLang]['artist-repertoire'] || 'Repertoire';
+break;
+case 'media':
+sectionTitle = translations[currentLang]['artist-media'] || 'Media';
+break;
+default:
+sectionTitle = 'Detail';
+}
+  
+title.textContent = `${artist.name[currentLang]} - ${sectionTitle}`;
+  
+if (artistId === 'japYeo') {
+image.src = document.getElementById('japYeoImg').src || '';
+} else if (artistId === 'kueiPin') {
+image.src = document.getElementById('kueiPinImg').src || '';
+} else if (artistId === 'japTji') {
+image.src = document.getElementById('japTjiImg').src || '';
+}
+  
+if (image.src) {
+image.style.display = 'block';
+} else {
+image.style.display = 'none';
+}
+  
+content.innerHTML = artist[section][currentLang] || '<p>Content not available.</p>';
+  
+modal.style.display = 'block';
+}
+
+function closeArtistDetailModal() {
+document.getElementById('artistDetailModal').style.display = 'none';
+}
+
+// Handle file upload
+function handleFileUpload(input, key) {
+const file = input.files[0];
+if (file && file.type.startsWith('image/')) {
+const reader = new FileReader();
+reader.onload = function(e) {
+const imageData = {
+id: Date.now() + Math.random(),
+src: e.target.result,
+name: file.name,
+uploadDate: new Date().toISOString()
+};
+
+saveImage(key, imageData);
+showNotification('Image uploaded successfully!');
+};
+reader.readAsDataURL(file);
+}
+}
+
+// Handle gallery upload (multiple files)
+function handleGalleryUpload(input) {
+const files = input.files;
+  
+if (files.length === 0) return;
+  
+let galleryData = JSON.parse(localStorage.getItem(IMAGE_KEYS.gallery) || '[]');
+let processedCount = 0;
+  
+Array.from(files).forEach(file => {
+if (file.type.startsWith('image/')) {
+const reader = new FileReader();
+reader.onload = function(e) {
+const imageData = {
+id: Date.now() + Math.random(),
+src: e.target.result,
+name: file.name,
+uploadDate: new Date().toISOString()
+};
+
+galleryData.push(imageData);
+processedCount++;
+
+if (processedCount === files.length) {
+localStorage.setItem(IMAGE_KEYS.gallery, JSON.stringify(galleryData));
+updateGalleryDisplay(galleryData);
+
+showNotification(`${files.length} image(s) uploaded successfully!`);
+
+input.value = '';
+}
+};
+reader.readAsDataURL(file);
+}
+});
+}
+
+// Update gallery display
+function updateGalleryDisplay(galleryData) {
+const galleryGrid = document.getElementById('galleryGrid');
+const visibleCount = document.getElementById('visibleCount');
+const totalCount = document.getElementById('totalCount');
+  
+galleryGrid.innerHTML = '';
+  
+if (galleryData && galleryData.length > 0) {
+const displayCount = Math.min(10, galleryData.length);
+    
+for (let i = 0; i < displayCount; i++) {
+const imageData = galleryData[i];
+const galleryItem = document.createElement('div');
+galleryItem.className = 'gallery-item';
+galleryItem.innerHTML = `
+<img src="${imageData.src}" alt="${imageData.name}" onclick="openImageModal('${imageData.src}')">
+<div class="gallery-overlay">
+<h4>${imageData.name}</h4>
+<p>${translations[currentLang]['gallery-image'] || 'Gallery image'} ${i + 1}</p>
+</div>
+`;
+galleryGrid.appendChild(galleryItem);
+}
+    
+visibleCount.textContent = displayCount;
+totalCount.textContent = galleryData.length;
+} else {
+for (let i = 0; i < 4; i++) {
+const galleryItem = document.createElement('div');
+galleryItem.className = 'gallery-item';
+galleryItem.innerHTML = `
+<div class="placeholder-image">
+<span>${translations[currentLang]['no-gallery-image'] || 'No gallery image'} ${i + 1}</span>
+</div>
+`;
+galleryGrid.appendChild(galleryItem);
+}
+    
+visibleCount.textContent = '0';
+totalCount.textContent = '0';
+}
+  
+updateGalleryManager(galleryData);
+}
+
+// Update gallery manager
+function updateGalleryManager(galleryData) {
+const galleryManager = document.getElementById('galleryManager');
+const totalGalleryCount = document.getElementById('totalGalleryCount');
+  
+totalGalleryCount.textContent = galleryData ? galleryData.length : 0;
+  
+galleryManager.innerHTML = '';
+  
+if (galleryData && galleryData.length > 0) {
+galleryData.forEach((imageData, index) => {
+const imageItem = document.createElement('div');
+imageItem.className = 'current-image';
+imageItem.innerHTML = `
+<img src="${imageData.src}" alt="${imageData.name}">
+<div class="image-actions">
+<button onclick="deleteGalleryImage(${index})" title="Delete">
+<i class="fas fa-trash"></i>
+</button>
+</div>
+`;
+galleryManager.appendChild(imageItem);
+});
+} else {
+galleryManager.innerHTML = `<p style="text-align: center; color: var(--text-light); font-size: 0.9rem;">${translations[currentLang]['no-gallery-uploaded'] || 'No gallery images uploaded yet'}</p>`;
+}
+}
+
+// Delete gallery image
+function deleteGalleryImage(index) {
+if (confirm('Are you sure you want to delete this gallery image?')) {
+let galleryData = JSON.parse(localStorage.getItem(IMAGE_KEYS.gallery) || '[]');
+galleryData.splice(index, 1);
+localStorage.setItem(IMAGE_KEYS.gallery, JSON.stringify(galleryData));
+updateGalleryDisplay(galleryData);
+showNotification('Image deleted successfully!');
+}
+}
+
+// Show notification
+function showNotification(message, type = 'success') {
+const notification = document.createElement('div');
+notification.className = type === 'error' ? 'upload-error' : 'upload-success';
+notification.textContent = message;
+notification.style.animation = 'slideDown 0.3s ease';
+notification.style.display = 'block';
+  
+if (type === 'error') {
+notification.style.backgroundColor = 'var(--error)';
+} else if (type === 'info') {
+notification.style.backgroundColor = 'var(--primary)';
+}
+  
+const adminContent = document.querySelector('.admin-content');
+adminContent.appendChild(notification);
+  
+setTimeout(() => {
+notification.style.display = 'none';
+if (notification.parentNode) {
+adminContent.removeChild(notification);
+}
+}, 3000);
+}
+
+// Load all images
+function loadAllImages() {
+Object.values(IMAGE_KEYS).forEach(key => {
+const imageData = loadImage(key);
+if (imageData) {
+updateImageDisplay(key, imageData);
+}
+});
+}
+
+// Update specific image displays
+function updateLogoDisplay(imageData) {
+if (imageData) {
+document.getElementById('currentLogo').src = imageData.src;
+document.getElementById('currentLogo').style.display = 'block';
+document.getElementById('logoPlaceholder').style.display = 'none';
+document.getElementById('logoInfo').textContent = `Uploaded: ${new Date().toLocaleString()}`;
+document.getElementById('logoInfo').style.display = 'block';
+    
+document.getElementById('headerLogo').src = imageData.src;
+document.getElementById('headerLogo').style.display = 'block';
+} else {
+document.getElementById('currentLogo').style.display = 'none';
+document.getElementById('logoPlaceholder').style.display = 'flex';
+document.getElementById('logoInfo').style.display = 'none';
+    
+document.getElementById('headerLogo').style.display = 'none';
+}
+}
+
+function updateBackgroundDisplay(imageData) {
+if (imageData) {
+document.getElementById('currentBackground').src = imageData.src;
+document.getElementById('currentBackground').style.display = 'block';
+document.getElementById('backgroundPlaceholder').style.display = 'none';
+document.getElementById('backgroundInfo').textContent = `Uploaded: ${new Date().toLocaleString()}`;
+document.getElementById('backgroundInfo').style.display = 'block';
+    
+document.getElementById('heroBg').style.backgroundImage = `url(${imageData.src})`;
+} else {
+document.getElementById('currentBackground').style.display = 'none';
+document.getElementById('backgroundPlaceholder').style.display = 'flex';
+document.getElementById('backgroundInfo').style.display = 'none';
+    
+document.getElementById('heroBg').style.backgroundImage = '';
+}
+}
+
+function updateSplashLogoDisplay(imageData) {
+if (imageData) {
+document.getElementById('currentSplashLogo').src = imageData.src;
+document.getElementById('currentSplashLogo').style.display = 'block';
+document.getElementById('splashLogoPlaceholder').style.display = 'none';
+document.getElementById('splashLogoInfo').textContent = `Uploaded: ${new Date().toLocaleString()}`;
+document.getElementById('splashLogoInfo').style.display = 'block';
+    
+document.getElementById('splashLogoImg').src = imageData.src;
+document.getElementById('splashLogoImg').style.display = 'block';
+} else {
+document.getElementById('currentSplashLogo').style.display = 'none';
+document.getElementById('splashLogoPlaceholder').style.display = 'flex';
+document.getElementById('splashLogoInfo').style.display = 'none';
+    
+document.getElementById('splashLogoImg').style.display = 'none';
+}
+}
+
+function updateBeethovenDisplay(imageData) {
+if (imageData) {
+document.getElementById('currentBeethoven').src = imageData.src;
+document.getElementById('currentBeethoven').style.display = 'block';
+document.getElementById('beethovenPlaceholder').style.display = 'none';
+document.getElementById('beethovenInfo').textContent = `Uploaded: ${new Date().toLocaleString()}`;
+document.getElementById('beethovenInfo').style.display = 'block';
+    
+document.getElementById('beethovenProjectImg').src = imageData.src;
+document.getElementById('beethovenProjectImg').style.display = 'block';
+document.getElementById('beethovenProjectPlaceholder').style.display = 'none';
+} else {
+document.getElementById('currentBeethoven').style.display = 'none';
+document.getElementById('beethovenPlaceholder').style.display = 'flex';
+document.getElementById('beethovenInfo').style.display = 'none';
+    
+document.getElementById('beethovenProjectImg').style.display = 'none';
+document.getElementById('beethovenProjectPlaceholder').style.display = 'flex';
+}
+}
+
+function updateBeethovenDetailDisplay(imageData) {
+if (imageData) {
+document.getElementById('currentBeethovenDetail').src = imageData.src;
+document.getElementById('currentBeethovenDetail').style.display = 'block';
+document.getElementById('beethovenDetailPlaceholder').style.display = 'none';
+document.getElementById('beethovenDetailInfo').textContent = `Uploaded: ${new Date().toLocaleString()}`;
+document.getElementById('beethovenDetailInfo').style.display = 'block';
+    
+document.getElementById('beethovenDetailImg').src = imageData.src;
+document.getElementById('beethovenDetailImg').style.display = 'block';
+document.getElementById('beethovenDetailPlaceholder').style.display = 'none';
+} else {
+document.getElementById('currentBeethovenDetail').style.display = 'none';
+document.getElementById('beethovenDetailPlaceholder').style.display = 'flex';
+document.getElementById('beethovenDetailInfo').style.display = 'none';
+    
+document.getElementById('beethovenDetailImg').style.display = 'none';
+document.getElementById('beethovenDetailPlaceholder').style.display = 'flex';
+}
+}
+
+function updateJapYeoDisplay(imageData) {
+if (imageData) {
+document.getElementById('currentJapYeo').src = imageData.src;
+document.getElementById('currentJapYeo').style.display = 'block';
+document.getElementById('japYeoPlaceholder').style.display = 'none';
+document.getElementById('japYeoInfo').textContent = `Uploaded: ${new Date().toLocaleString()}`;
+document.getElementById('japYeoInfo').style.display = 'block';
+    
+document.getElementById('japYeoImg').src = imageData.src;
+document.getElementById('japYeoImg').style.display = 'block';
+document.getElementById('japYeoPlaceholder').style.display = 'none';
+} else {
+document.getElementById('currentJapYeo').style.display = 'none';
+document.getElementById('japYeoPlaceholder').style.display = 'flex';
+document.getElementById('japYeoInfo').style.display = 'none';
+    
+document.getElementById('japYeoImg').style.display = 'none';
+document.getElementById('japYeoPlaceholder').style.display = 'flex';
+}
+}
+
+function updateKueiPinDisplay(imageData) {
+if (imageData) {
+document.getElementById('currentKueiPin').src = imageData.src;
+document.getElementById('currentKueiPin').style.display = 'block';
+document.getElementById('kueiPinPlaceholder').style.display = 'none';
+document.getElementById('kueiPinInfo').textContent = `Uploaded: ${new Date().toLocaleString()}`;
+document.getElementById('kueiPinInfo').style.display = 'block';
+    
+document.getElementById('kueiPinImg').src = imageData.src;
+document.getElementById('kueiPinImg').style.display = 'block';
+document.getElementById('kueiPinPlaceholder').style.display = 'none';
+} else {
+document.getElementById('currentKueiPin').style.display = 'none';
+document.getElementById('kueiPinPlaceholder').style.display = 'flex';
+document.getElementById('kueiPinInfo').style.display = 'none';
+    
+document.getElementById('kueiPinImg').style.display = 'none';
+document.getElementById('kueiPinPlaceholder').style.display = 'flex';
+}
+}
+
+function updateJapTjiDisplay(imageData) {
+if (imageData) {
+document.getElementById('currentJapTji').src = imageData.src;
+document.getElementById('currentJapTji').style.display = 'block';
+document.getElementById('japTjiPlaceholder').style.display = 'none';
+document.getElementById('japTjiInfo').textContent = `Uploaded: ${new Date().toLocaleString()}`;
+document.getElementById('japTjiInfo').style.display = 'block';
+    
+document.getElementById('japTjiImg').src = imageData.src;
+document.getElementById('japTjiImg').style.display = 'block';
+document.getElementById('japTjiPlaceholder').style.display = 'none';
+} else {
+document.getElementById('currentJapTji').style.display = 'none';
+document.getElementById('japTjiPlaceholder').style.display = 'flex';
+document.getElementById('japTjiInfo').style.display = 'none';
+    
+document.getElementById('japTjiImg').style.display = 'none';
+document.getElementById('japTjiPlaceholder').style.display = 'flex';
+}
+}
+
+// Login form handler
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+e.preventDefault();
+  
+if (isLocked) {
+  const remainingTime = Math.ceil((lockTime - Date.now()) / (1000 * 60));
+  alert(`Account locked. Please try again in ${remainingTime} minutes.`);
+  return;
+}
+  
+const username = document.getElementById('adminUsername').value;
+const password = document.getElementById('adminPassword').value;
+const errorElement = document.getElementById('loginError');
+  
+if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+isLoggedIn = true;
+loginAttempts = 0;
+localStorage.setItem('ymjAdminLoggedIn', 'true');
+localStorage.setItem('ymjLoginTime', Date.now().toString());
+document.getElementById('adminToggle').classList.add('logged-in');
+closeAdminLogin();
+toggleAdminDashboard();
+showNotification('Login successful!', 'success');
+} else {
+loginAttempts++;
+errorElement.textContent = 'Invalid username or password';
+errorElement.style.display = 'block';
+  
+if (loginAttempts >= MAX_LOGIN_ATTEMPTS) {
+  isLocked = true;
+  lockTime = Date.now() + (15 * 60 * 1000);
+  localStorage.setItem('ymjLockedUntil', lockTime.toString());
+  
+  errorElement.textContent = 'Too many failed attempts. Account locked for 15 minutes.';
+  updateLoginAttempts();
+  
+  document.getElementById('adminUsername').value = '';
+  document.getElementById('adminPassword').value = '';
+} else {
+  updateLoginAttempts();
+}
+}
+});
+
+// Language switching functionality
+function switchLanguage(lang) {
+currentLang = lang;
+  
+// Update active language button
+document.querySelectorAll('.lang-btn').forEach(btn => {
+btn.classList.remove('active');
+});
+document.querySelector(`.lang-btn[data-lang="${lang}"]`).classList.add('active');
+
+// Hide all content
+document.querySelectorAll('.content-en, .content-id, .content-zh').forEach(content => {
+content.classList.remove('active');
+});
+
+// Show selected language content
+document.querySelectorAll(`.content-${lang}`).forEach(content => {
+content.classList.add('active');
+});
+
+// Update all elements with data-lang-key attributes
+document.querySelectorAll('[data-lang-key]').forEach(element => {
+const key = element.getAttribute('data-lang-key');
+if (translations[lang] && translations[lang][key]) {
+element.textContent = translations[lang][key];
+}
+});
+
+// Reload events to update language
+loadEvents();
+}
+
+// Image Modal
+function openImageModal(imageUrl) {
+const modal = document.getElementById('imageModal');
+const modalImg = document.getElementById('modalImage');
+modal.style.display = 'block';
+modalImg.src = imageUrl;
+}
+
+function closeImageModal() {
+document.getElementById('imageModal').style.display = 'none';
+}
+
+// Open full gallery modal
+function openFullGallery() {
+const modal = document.getElementById('full-gallery-modal');
+const fullGalleryGrid = document.getElementById('full-gallery-grid');
+const galleryData = JSON.parse(localStorage.getItem(IMAGE_KEYS.gallery) || '[]');
+  
+fullGalleryGrid.innerHTML = '';
+  
+galleryData.forEach((imageData, index) => {
+const galleryItem = document.createElement('div');
+galleryItem.className = 'full-gallery-item';
+galleryItem.innerHTML = `
+<img src="${imageData.src}" alt="${imageData.name}" onclick="openImageModal('${imageData.src}')">
+<div class="full-gallery-overlay">
+<p>${imageData.name}</p>
+</div>
+`;
+fullGalleryGrid.appendChild(galleryItem);
+});
+  
+modal.style.display = 'block';
+}
+
+// Close full gallery modal
+function closeFullGallery() {
+document.getElementById('full-gallery-modal').style.display = 'none';
+}
+
+// Splash screen functionality
+document.addEventListener('DOMContentLoaded', function() {
+const splashScreen = document.getElementById('splashScreen');
+const mainContent = document.getElementById('mainContent');
+
+splashScreen.addEventListener('click', function() {
+splashScreen.style.opacity = '0';
+splashScreen.style.visibility = 'hidden';
+mainContent.classList.add('active');
+});
+
+document.querySelector('.splash-content').addEventListener('click', function(e) {
+e.stopPropagation();
+splashScreen.style.opacity = '0';
+splashScreen.style.visibility = 'hidden';
+mainContent.classList.add('active');
+});
+
+// Initialize page
+checkAdminStatus();
+loadAllImages();
+loadEvents();
+switchLanguage('id');
+
+// Add smooth page load
+document.body.style.opacity = '0';
+setTimeout(() => {
+document.body.style.transition = 'opacity 0.5s ease';
+document.body.style.opacity = '1';
+}, 100);
+});
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+const imageModal = document.getElementById('imageModal');
+const fullGalleryModal = document.getElementById('full-gallery-modal');
+const eventDetailModal = document.getElementById('eventDetailModal');
+const artistDetailModal = document.getElementById('artistDetailModal');
+
+if (event.target == imageModal) {
+closeImageModal();
+}
+
+if (event.target == fullGalleryModal) {
+closeFullGallery();
+}
+
+if (event.target == eventDetailModal) {
+closeEventDetailModal();
+}
+
+if (event.target == artistDetailModal) {
+closeArtistDetailModal();
+}
+}
+
+// Initialize form handlers
+document.addEventListener('DOMContentLoaded', function() {
+// Language switcher
+document.querySelectorAll('.lang-btn').forEach(btn => {
+btn.addEventListener('click', function() {
+const lang = this.dataset.lang;
+switchLanguage(lang);
+});
+});
+
+// Community form
+const communityForm = document.getElementById('communityForm');
+if (communityForm) {
+communityForm.addEventListener('submit', function(e) {
+e.preventDefault();
+    
+const submitBtn = communityForm.querySelector('button[type="submit"]');
+const originalText = submitBtn.textContent;
+submitBtn.textContent = 'Mengirim...';
+submitBtn.disabled = true;
+    
+setTimeout(() => {
+submitBtn.textContent = 'Terkirim!';
+submitBtn.style.backgroundColor = 'var(--success)';
+    
+communityForm.reset();
+    
+setTimeout(() => {
+submitBtn.textContent = originalText;
+submitBtn.style.backgroundColor = '';
+submitBtn.disabled = false;
+}, 3000);
+}, 1000);
+});
+}
+
+// Mobile menu toggle
+const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+const navMenu = document.querySelector('.nav-menu');
+
+mobileMenuToggle.addEventListener('click', function() {
+navMenu.classList.toggle('active');
+});
+
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+anchor.addEventListener('click', function(e) {
+e.preventDefault();
+
+const targetId = this.getAttribute('href');
+if (targetId === '#') return;
+
+const targetElement = document.querySelector(targetId);
+if (targetElement) {
+const headerHeight = document.querySelector('header').offsetHeight;
+const targetPosition = targetElement.offsetTop - headerHeight;
+
+window.scrollTo({
+top: targetPosition,
+behavior: 'smooth'
+});
+
+navMenu.classList.remove('active');
+}
+});
+});
+
+// Scroll animations
+const fadeElements = document.querySelectorAll('.fade-in');
+
+function checkFade() {
+fadeElements.forEach(element => {
+const elementTop = element.getBoundingClientRect().top;
+const elementBottom = element.getBoundingClientRect().bottom;
+
+if (elementTop < window.innerHeight && elementBottom > 0) {
+element.classList.add('visible');
+}
+});
+}
+
+window.addEventListener('scroll', checkFade);
+checkFade();
+});
+
+// Setup file input listeners
+document.addEventListener('DOMContentLoaded', function() {
+checkAdminStatus();
+loadAllImages();
+
+// Setup file inputs
+document.getElementById('logoInput').addEventListener('change', function() {
+handleFileUpload(this, IMAGE_KEYS.logo);
+});
+
+document.getElementById('backgroundInput').addEventListener('change', function() {
+handleFileUpload(this, IMAGE_KEYS.background);
+});
+
+document.getElementById('splashLogoInput').addEventListener('change', function() {
+handleFileUpload(this, IMAGE_KEYS.splashLogo);
+});
+
+document.getElementById('beethovenInput').addEventListener('change', function() {
+handleFileUpload(this, IMAGE_KEYS.beethoven);
+});
+
+document.getElementById('beethovenDetailInput').addEventListener('change', function() {
+handleFileUpload(this, IMAGE_KEYS.beethovenDetail);
+});
+
+document.getElementById('japYeoInput').addEventListener('change', function() {
+handleFileUpload(this, IMAGE_KEYS.japYeo);
+});
+
+document.getElementById('kueiPinInput').addEventListener('change', function() {
+handleFileUpload(this, IMAGE_KEYS.kueiPin);
+});
+
+document.getElementById('japTjiInput').addEventListener('change', function() {
+handleFileUpload(this, IMAGE_KEYS.japTji);
+});
+
+// Gallery upload
+document.getElementById('galleryInput').addEventListener('change', function() {
+handleGalleryUpload(this);
+});
+});
+</script>
+</body>
+</html>
